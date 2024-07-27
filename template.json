@@ -1,0 +1,107 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "power": {
+          "value": 5,
+          "min": 0,
+          "max": 5
+        },
+
+        "speed": {
+          "value": 0
+        },
+        "iron": {
+          "value": 0
+        },
+
+        "weakness": {
+          "value": 0
+        },
+        "challenge": {
+          "value": 0
+        }
+      },
+      "healthBars": [],
+      "bonuses": {}
+    }
+  },
+  "character": {
+    "templates": ["base"],
+    "attributes": {
+      "level": {
+        "value": 1
+      }
+    },
+    "abilities": {
+      "speedTokens": {
+        "value": 10,
+        "min": 0
+      },
+      "ironTokens": {
+        "value": 0,
+        "min": 0
+      },
+      "powerTokens": {
+        "value": 0,
+        "min": 0
+      },
+      "weaknessTokens": {
+        "value": 0,
+        "min": 0
+      }
+    }
+  },
+  "npc": {
+    "templates": ["base"],
+    "cr": 0
+  },
+  "Item": {
+    "types": ["style", "form", "item", "feature", "spell"],
+    "templates": {
+      "base": {}
+    },
+
+    "form": {
+      "templates": ["base"],
+      "name": "Dance Form",
+      "altNames": ["Circle", "Crab"],
+      "actionDice": ["d6", "6", "d4"],
+      "abilityDescription": "",
+      "uniqueActions": [],
+      "skillDescription": ""
+    },
+
+    "style": {
+      "name": "Pressure Style",
+      "range": [1, 2],
+      "abilityDescription": "",
+      "uniqueActions": [],
+
+      "templates": ["base"],
+      "altNames": ["Circle", "Crab"],
+      "actionDice": ["d6", "6", "d4"],
+      "skillDescription": ""
+    },
+
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    }
+  }
+}
