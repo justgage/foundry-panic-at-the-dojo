@@ -1,2 +1,18 @@
-$font-primary: 'Roboto', sans-serif;
-$font-secondary: 'Roboto', sans-serif;
+$font-primary: "Caveat Brush", sans-serif;
+$font-secondary: "Roboto", sans-serif;
+
+@font-face {
+  font-family: "Dicier";
+  src: url("../fonts/Dicier-Round-Heavy.woff2") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-size: large;
+}
+
+.dice {
+  font-family: "Dicier";
+  font-variant-ligatures: discretionary-ligatures;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1, "kern" 1, "calt" 1, "dlig" 1;
+  text-transform: uppercase;
+}

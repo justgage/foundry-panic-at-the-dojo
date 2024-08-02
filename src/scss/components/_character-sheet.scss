@@ -1,0 +1,52 @@
+.tokenInput {
+  font-size: 2rem;
+  height: 3rem;
+  width: 3rem;
+  border: 2px solid rgb(255 255 255 / 65%);
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  background: linear-gradient(318deg, #72e900, #fffea9);
+  border-radius: 999px;
+  background-origin: border-box;
+}
+
+.token {
+  position: relative;
+  text-align: center;
+  padding: 0 16px;
+
+  & label {
+    font-size: 12px;
+  }
+
+  &:hover .sm-button {
+    display: block;
+  }
+
+  & .sm-button {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 81%);
+    border: 2px solid rgb(0 0 0 / 46%);
+
+    &.addToken {
+      right: 0px;
+    }
+    &.removeToken {
+      left: 0px;
+    }
+  }
+}
+
+.form-title {
+  background-color: #527afe;
+  border-bottom-right-radius: 20%;
+  color: white;
+  padding: 5px 10px;
+}

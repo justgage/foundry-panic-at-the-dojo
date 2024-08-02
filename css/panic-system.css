@@ -1,7 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Permanent+Marker&display=swap");
+@font-face {
+  font-family: "Dicier";
+  src: url("../fonts/Dicier-Round-Heavy.woff2") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-size: large;
+}
+.dice {
+  font-family: "Dicier";
+  font-variant-ligatures: discretionary-ligatures;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1, "kern" 1, "calt" 1, "dlig" 1;
+  text-transform: uppercase;
+}
+
 /* Global styles */
 .window-app {
-  font-family: "Roboto", sans-serif;
+  font-family: "Caveat Brush", sans-serif;
 }
 
 .rollable:hover, .rollable:focus {
@@ -205,7 +222,7 @@
 
 /* Styles limited to panic-system sheets */
 .panic-system .item-form {
-  font-family: "Roboto", sans-serif;
+  font-family: "Caveat Brush", sans-serif;
 }
 .panic-system .sheet-header {
   flex: 0 auto;
@@ -364,3 +381,51 @@
 .panic-system .effects .item .effect-controls {
   border: none;
 }
+.panic-system .tokenInput {
+  font-size: 2rem;
+  height: 3rem;
+  width: 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  background: linear-gradient(318deg, #72e900, #fffea9);
+  border-radius: 999px;
+  background-origin: border-box;
+}
+.panic-system .token {
+  position: relative;
+  text-align: center;
+  padding: 0 16px;
+}
+.panic-system .token label {
+  font-size: 12px;
+}
+.panic-system .token:hover .sm-button {
+  display: block;
+}
+.panic-system .token .sm-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: none;
+  position: absolute;
+  bottom: 0px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.81);
+  border: 2px solid rgba(0, 0, 0, 0.46);
+}
+.panic-system .token .sm-button.addToken {
+  right: 0px;
+}
+.panic-system .token .sm-button.removeToken {
+  left: 0px;
+}
+.panic-system .form-title {
+  background-color: #527afe;
+  border-bottom-right-radius: 20%;
+  color: white;
+  padding: 5px 10px;
+}
+
+/*# sourceMappingURL=panic-system.css.map */

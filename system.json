@@ -4,12 +4,8 @@
   "description": "The Panic At The Dojo system for FoundryVTT!",
   "authors": [
     {
-      "name": "Asacolips",
-      "discord": "asacolips"
-    },
-    {
-      "name": "Lee Talman",
-      "discord": ".pizzaWizard"
+      "name": "Gage Peterson",
+      "discord": "justgage2"
     }
   ],
   "url": "Replace this with a link to your public repository",
@@ -24,7 +20,7 @@
       "thumbnail": "systems/panic-system/assets/anvil-impact.png"
     }
   ],
-  "version": "2.0.0",
+  "version": "1.0.0",
   "compatibility": {
     "minimum": 11,
     "verified": "11.315"

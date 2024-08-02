@@ -1,0 +1,73 @@
+<form class="sheet form-sheet" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img
+      class="profile-img"
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+    />
+    <div class="header-fields">
+      <h1 class="item-name">
+        <input
+          name="name"
+          type="text"
+          value="{{item.name}}"
+          placeholder="Name"
+        />
+      </h1>
+    </div>
+  </header>
+
+  <!-- Sheet Tab Navigation -->
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item active" data-tab="description">Description</a>
+    <a class="item" data-tab="attributes">Attributes</a>
+  </nav>
+
+  <!-- Sheet Body -->
+  <section class="sheet-body">
+
+    <!-- Description Tab -->
+    <div class="tab" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>Alternative Names:</label>
+        <ul>
+          {{#each item.system.altNames}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label>Ability Description:</label>
+        <textarea name="system.abilityDescription">{{item.system.abilityDescription}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Skill Description:</label>
+        <textarea name="system.skillDescription">{{item.system.skillDescription}}</textarea>
+      </div>
+    </div>
+
+    <!-- Attributes Tab -->
+    <div class="tab attributes" data-group="primary" data-tab="attributes">
+      <div class="form-group">
+        <label>Action Dice:</label>
+        <ul class="dice flexrow">
+          {{#each item.system.actionDice}}
+            <li>1_ON_{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label>Unique Actions:</label>
+        <ul>
+          {{#each item.system.uniqueActions}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </section>
+</form>

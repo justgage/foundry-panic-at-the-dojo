@@ -1,12 +1,11 @@
 {
   "PANIC": {
-    "Ability": {
-      "Str": { "long": "Strength", "abbr": "str" },
-      "Con": { "long": "Constitution", "abbr": "con" },
-      "Dex": { "long": "Dexterity", "abbr": "dex" },
-      "Int": { "long": "Intelligence", "abbr": "int" },
-      "Wis": { "long": "Wisdom", "abbr": "wis" },
-      "Cha": { "long": "Charisma", "abbr": "cha" }
+    "Token": {
+      "Speed": { "long": "Speed", "abbr": "spd" },
+      "Iron": { "long": "Iron", "abbr": "iron" },
+      "Power": { "long": "Power", "abbr": "pow" },
+      "Weakness": { "long": "Weakness", "abbr": "weak" },
+      "Burning": { "long": "Burning", "abbr": "burn" }
     },
     "SheetLabels": {
       "Actor": "Panic Actor Sheet",
