@@ -1,39 +1,47 @@
-.tokenInput {
-  font-size: 2rem;
-  height: 3rem;
-  width: 3rem;
+@mixin round-input {
   border: 2px solid rgb(255 255 255 / 65%);
   color: rgba(0, 0, 0, 0.8);
   text-align: center;
-  background: linear-gradient(318deg, #72e900, #fffea9);
+  background: linear-gradient(318deg, var(--tokenInputColor), #fffea9);
   border-radius: 999px;
   background-origin: border-box;
 }
 
+.tokenInput {
+  font-size: 2rem;
+  height: 3rem;
+  width: 3rem;
+  @include round-input;
+}
+
 .token {
+  --tokenInputColor: #72e900;
   position: relative;
   text-align: center;
-  padding: 0 16px;
+  padding: 0 8px;
 
   & label {
     font-size: 12px;
   }
 
   &:hover .sm-button {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   & .sm-button {
-    font-size: 1.5rem;
+    font-size: 18px;
     font-weight: bold;
     display: none;
     position: absolute;
     bottom: 0px;
-    width: 2rem;
-    height: 2rem;
+    width: 21px;
+    height: 22px;
     border-radius: 999px;
-    background: rgb(255 255 255 / 81%);
-    border: 2px solid rgb(0 0 0 / 46%);
+    color: white;
+    background: var(--tokenInputColor);
+    border: 2px solid rgba(0, 0, 0, 0.46);
 
     &.addToken {
       right: 0px;
@@ -49,4 +57,83 @@
   border-bottom-right-radius: 20%;
   color: white;
   padding: 5px 10px;
+}
+
+.style-title {
+  background-color: red;
+  border-bottom-right-radius: 20%;
+  padding: 5px 10px;
+}
+
+.hp-current {
+  font-size: 2rem;
+  height: 3rem;
+  width: 3rem;
+  --tokenInputColor: red;
+  @include round-input;
+}
+
+.token-iron {
+  --tokenInputColor: #4dccfe;
+}
+
+.token-power {
+  --tokenInputColor: #ff038e;
+}
+
+.token-weakness {
+  --tokenInputColor: #848953;
+}
+
+.token-burning {
+  --tokenInputColor: #ff8800;
+}
+
+.hp-max {
+  font-size: 1rem;
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+
+  --tokenInputColor: red;
+  @include round-input;
+}
+
+.stance {
+  padding: 0.25rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  background-color: #fffff6cd;
+
+  & h2 {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+    margin-top: -0.25rem;
+    background-color: rgb(255, 215, 34);
+    border-radius: 4px;
+    border-bottom-right-radius: 20px;
+    border-bottom: none;
+  }
+  & .stance-title {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: stretch;
+    & .dice {
+      padding-right: 1rem;
+    }
+    & .range {
+      font-size: small;
+    }
+  }
+  & .stance-label {
+    flex-grow: 1;
+    cursor: pointer;
+    padding-left: 0.25em;
+  }
+  &:has(input[type="radio"]:checked) {
+    background-color: #fffea9;
+  }
 }

@@ -1,20 +1,20 @@
 // Import document classes.
-import { PanicActor } from './documents/actor.mjs';
-import { PanicItem } from './documents/item.mjs';
+import { PanicActor } from "./documents/actor.mjs";
+import { PanicItem } from "./documents/item.mjs";
 
 // Import sheet classes.
-import { PanicActorSheet } from './sheets/actor-sheet.mjs';
-import { PanicItemSheet } from './sheets/item-sheet.mjs';
+import { PanicActorSheet } from "./sheets/actor-sheet.mjs";
+import { PanicItemSheet } from "./sheets/item-sheet.mjs";
 
 // Import helper/utility classes and constants.
-import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { PANIC } from './helpers/config.mjs';
+import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
+import { PANIC } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once('init', function () {
+Hooks.once("init", function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.panicsystem = {
@@ -31,7 +31,7 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d20 + @tokens.dex.mod',
+    formula: "1d20 + @tokens.dex.mod",
     decimals: 2,
   };
 
@@ -45,15 +45,15 @@ Hooks.once('init', function () {
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('panic-system', PanicActorSheet, {
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("panic-system", PanicActorSheet, {
     makeDefault: true,
-    label: 'PANIC.SheetLabels.Actor',
+    label: "PANIC.SheetLabels.Actor",
   });
-  Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('panic-system', PanicItemSheet, {
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet("panic-system", PanicItemSheet, {
     makeDefault: true,
-    label: 'PANIC.SheetLabels.Item',
+    label: "PANIC.SheetLabels.Item",
   });
 
   // Preload Handlebars templates.
@@ -65,17 +65,35 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here is a useful example:
-Handlebars.registerHelper('toLowerCase', function (str) {
+Handlebars.registerHelper("toLowerCase", function (str) {
   return str.toLowerCase();
+});
+
+Handlebars.registerHelper({
+  eq: (v1, v2) => v1 === v2,
+  ne: (v1, v2) => v1 !== v2,
+  lt: (v1, v2) => v1 < v2,
+  gt: (v1, v2) => v1 > v2,
+  lte: (v1, v2) => v1 <= v2,
+  gte: (v1, v2) => v1 >= v2,
+  and() {
+    return Array.prototype.every.call(arguments, Boolean);
+  },
+  or() {
+    return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+  },
+  setVar: function (varName, varValue, options) {
+    this[varName] = varValue;
+  },
 });
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once('ready', function () {
+Hooks.once("ready", function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
 /* -------------------------------------------- */
@@ -91,10 +109,10 @@ Hooks.once('ready', function () {
  */
 async function createItemMacro(data, slot) {
   // First, determine if this is a valid owned item.
-  if (data.type !== 'Item') return;
-  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
+  if (data.type !== "Item") return;
+  if (!data.uuid.includes("Actor.") && !data.uuid.includes("Token.")) {
     return ui.notifications.warn(
-      'You can only create macro buttons for owned Items'
+      "You can only create macro buttons for owned Items"
     );
   }
   // If it is, retrieve it based on the uuid.
@@ -108,10 +126,10 @@ async function createItemMacro(data, slot) {
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
-      type: 'script',
+      type: "script",
       img: item.img,
       command: command,
-      flags: { 'panic-system.itemMacro': true },
+      flags: { "panic-system.itemMacro": true },
     });
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -126,7 +144,7 @@ async function createItemMacro(data, slot) {
 function rollItemMacro(itemUuid) {
   // Reconstruct the drop data so that we can load the item.
   const dropData = {
-    type: 'Item',
+    type: "Item",
     uuid: itemUuid,
   };
   // Load the item from the uuid.

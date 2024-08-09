@@ -16,6 +16,10 @@
   text-transform: uppercase;
 }
 
+.font-normal {
+  font-family: "Caveat Brush";
+}
+
 /* Global styles */
 .window-app {
   font-family: "Caveat Brush", sans-serif;
@@ -310,7 +314,8 @@
   align-items: center;
   display: flex;
 }
-.panic-system .items-list .item-name h3, .panic-system .items-list .item-name h4 {
+.panic-system .items-list .item-name h3,
+.panic-system .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
@@ -370,6 +375,12 @@
   flex: 0 0 200px;
   padding: 0 8px;
 }
+.panic-system .delete-dice {
+  color: red;
+}
+.panic-system .item-name {
+  justify-content: baseline;
+}
 .panic-system .effects .item .effect-source,
 .panic-system .effects .item .effect-duration,
 .panic-system .effects .item .effect-controls {
@@ -388,31 +399,35 @@
   border: 2px solid rgba(255, 255, 255, 0.65);
   color: rgba(0, 0, 0, 0.8);
   text-align: center;
-  background: linear-gradient(318deg, #72e900, #fffea9);
+  background: linear-gradient(318deg, var(--tokenInputColor), #fffea9);
   border-radius: 999px;
   background-origin: border-box;
 }
 .panic-system .token {
+  --tokenInputColor: #72e900;
   position: relative;
   text-align: center;
-  padding: 0 16px;
+  padding: 0 8px;
 }
 .panic-system .token label {
   font-size: 12px;
 }
 .panic-system .token:hover .sm-button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .panic-system .token .sm-button {
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: bold;
   display: none;
   position: absolute;
   bottom: 0px;
-  width: 2rem;
-  height: 2rem;
+  width: 21px;
+  height: 22px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.81);
+  color: white;
+  background: var(--tokenInputColor);
   border: 2px solid rgba(0, 0, 0, 0.46);
 }
 .panic-system .token .sm-button.addToken {
@@ -426,6 +441,85 @@
   border-bottom-right-radius: 20%;
   color: white;
   padding: 5px 10px;
+}
+.panic-system .style-title {
+  background-color: red;
+  border-bottom-right-radius: 20%;
+  padding: 5px 10px;
+}
+.panic-system .hp-current {
+  font-size: 2rem;
+  height: 3rem;
+  width: 3rem;
+  --tokenInputColor: red;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  background: linear-gradient(318deg, var(--tokenInputColor), #fffea9);
+  border-radius: 999px;
+  background-origin: border-box;
+}
+.panic-system .token-iron {
+  --tokenInputColor: #4dccfe;
+}
+.panic-system .token-power {
+  --tokenInputColor: #ff038e;
+}
+.panic-system .token-weakness {
+  --tokenInputColor: #848953;
+}
+.panic-system .token-burning {
+  --tokenInputColor: #ff8800;
+}
+.panic-system .hp-max {
+  font-size: 1rem;
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  --tokenInputColor: red;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  background: linear-gradient(318deg, var(--tokenInputColor), #fffea9);
+  border-radius: 999px;
+  background-origin: border-box;
+}
+.panic-system .stance {
+  padding: 0.25rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  background-color: rgba(255, 255, 246, 0.8039215686);
+}
+.panic-system .stance h2 {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+  margin-top: -0.25rem;
+  background-color: rgb(255, 215, 34);
+  border-radius: 4px;
+  border-bottom-right-radius: 20px;
+  border-bottom: none;
+}
+.panic-system .stance .stance-title {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: stretch;
+}
+.panic-system .stance .stance-title .dice {
+  padding-right: 1rem;
+}
+.panic-system .stance .stance-title .range {
+  font-size: small;
+}
+.panic-system .stance .stance-label {
+  flex-grow: 1;
+  cursor: pointer;
+  padding-left: 0.25em;
+}
+.panic-system .stance:has(input[type=radio]:checked) {
+  background-color: #fffea9;
 }
 
 /*# sourceMappingURL=panic-system.css.map */

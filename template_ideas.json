@@ -73,20 +73,37 @@
       "altNames": ["Circle", "Crab"],
       "actionDice": ["d6", "6", "d4"],
       "abilityDescription": "",
-      "uniqueActions": [],
       "skillDescription": ""
     },
 
     "style": {
-      "name": "Pressure Style",
-      "range": [1, 2],
-      "abilityDescription": "",
-      "uniqueActions": [],
-
       "templates": ["base"],
-      "altNames": ["Circle", "Crab"],
-      "actionDice": ["d6", "6", "d4"],
-      "skillDescription": ""
+      "name": "Crystal Style",
+      "range": [1, 2],
+      "description": "When one of your Copies is destroyed, it deals 1 damage to every enemy adjacent to it.",
+      "uniqueActions": [
+        {
+          "name": "Splinter",
+          "description": "At the start of your turn, give one Weakness token to every enemy within range.",
+          "costOptions": [
+            {
+              "resources": [
+                { "id": "hp", "amount": -2 },
+                { "id": "burnToken", "amount": -2 }
+              ]
+            },
+            { "resources": [{ "id": "dice", "amount": 4 }] }
+          ],
+          "effects": [
+            { "id": "hp", "amount": -2 },
+            {
+              "id": "copy-player",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "commentary": ""
     },
 
     "item": {

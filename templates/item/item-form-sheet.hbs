@@ -1,19 +1,9 @@
 <form class="sheet form-sheet" autocomplete="off">
   <header class="sheet-header flexrow">
-    <img
-      class="profile-img"
-      src="{{item.img}}"
-      data-edit="img"
-      title="{{item.name}}"
-    />
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <h1 class="item-name">
-        <input
-          name="name"
-          type="text"
-          value="{{item.name}}"
-          placeholder="Name"
-        />
+        <input name="name" type="text" value="{{item.name}}" placeholder="Name" />
       </h1>
     </div>
   </header>
@@ -27,47 +17,67 @@
   <!-- Sheet Body -->
   <section class="sheet-body">
 
-    <!-- Description Tab -->
-    <div class="tab" data-group="primary" data-tab="description">
-      <div class="form-group">
-        <label>Alternative Names:</label>
-        <ul>
-          {{#each item.system.altNames}}
-            <li>{{this}}</li>
+    <div class="form-group">
+      <label>Action Dice:</label>
+      <div>
+        <ul class="dice">
+          {{#each item.system.actionDice}}
+            <li class="flexrow">
+              <select name="system.actionDice.{{@index}}" class="dice-select dice">
+                <option value="d4" {{#if (eq this "d4" )}}selected{{/if}}>d4</option>
+                <option value="d6" {{#if (eq this "d6" )}}selected{{/if}}>d6</option>
+                <option value="d8" {{#if (eq this "d8" )}}selected{{/if}}>d8</option>
+                <option value="d10" {{#if (eq this "d10" )}}selected{{/if}}>d10</option>
+                <option value="d12" {{#if (eq this "d12" )}}selected{{/if}}>d12</option>
+                <option value="d20" {{#if (eq this "d20" )}}selected{{/if}}>d20</option>
+              </select>
+              <button type="button" class="delete-dice font-normal">Delete</button>
+            </li>
           {{/each}}
         </ul>
-      </div>
-
-      <div class="form-group">
-        <label>Ability Description:</label>
-        <textarea name="system.abilityDescription">{{item.system.abilityDescription}}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Skill Description:</label>
-        <textarea name="system.skillDescription">{{item.system.skillDescription}}</textarea>
+        <button type="button" class="add-dice">Add Dice</button>
       </div>
     </div>
 
-    <!-- Attributes Tab -->
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      <div class="form-group">
-        <label>Action Dice:</label>
-        <ul class="dice flexrow">
-          {{#each item.system.actionDice}}
-            <li>1_ON_{{this}}</li>
-          {{/each}}
-        </ul>
-      </div>
+
+    <div class="tab attributes" data-group="primary" data-tab="description">
 
       <div class="form-group">
         <label>Unique Actions:</label>
         <ul>
-          {{#each item.system.uniqueActions}}
-            <li>{{this}}</li>
+          {{#each item.system.uniqueActions as |action|}}
+            <li>{{log action}}</li>
           {{/each}}
         </ul>
       </div>
     </div>
+
+    <!-- Description Tab -->
+    <div class="form-group">
+      <label>Alternative Names:</label>
+      {{#each item.system.altNames}}
+        <span> {{this}} </span>
+      {{/each}}
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="description">
+      <label>Ability Description:</label>
+
+      {{editor
+          enrichedAbilityDescription
+          target="system.abilityDescription"
+          engine="prosemirror"
+          button=true
+          editable=editable
+        }}
+    </div>
+
+    <div class="form-group">
+      <label>Skill Description:</label>
+      <textarea name="system.skillDescription">{{item.system.skillDescription}}</textarea>
+    </div>
+
+    <!-- Attributes Tab -->
+
   </section>
 </form>

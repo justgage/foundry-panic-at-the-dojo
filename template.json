@@ -37,7 +37,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell", "form", "style"],
+    "types": ["form", "style", "item", "feature"],
     "templates": {
       "base": {
         "description": ""
@@ -50,20 +50,15 @@
       "altNames": ["Circle", "Crab"],
       "actionDice": ["d6", "6", "d4"],
       "abilityDescription": "",
-      "uniqueActions": [],
       "skillDescription": ""
     },
 
     "style": {
+      "templates": ["base"],
       "name": "Pressure Style",
       "range": [1, 2],
-      "abilityDescription": "",
       "uniqueActions": [],
-
-      "templates": ["base"],
-      "altNames": ["Circle", "Crab"],
-      "actionDice": ["d6", "6", "d4"],
-      "skillDescription": ""
+      "commentary": ""
     },
 
     "item": {
@@ -74,10 +69,6 @@
     },
     "feature": {
       "templates": ["base"]
-    },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
     }
   }
 }

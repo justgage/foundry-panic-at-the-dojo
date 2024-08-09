@@ -34,7 +34,8 @@
     "Item": {
       "item": "Item",
       "feature": "Feature",
-      "spell": "Spell"
+      "form": "Form",
+      "style": "Style"
     }
   }
 }

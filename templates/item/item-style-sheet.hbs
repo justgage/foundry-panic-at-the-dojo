@@ -1,0 +1,80 @@
+<form class='sheet style-sheet' autocomplete='off'>
+  <header class='sheet-header'>
+    <img class='profile-img' src='{{item.img}}' data-edit='img' title='{{item.name}}' />
+    <div class='header-fields'>
+      <h1 class='item-name style-name flexrow'>
+        <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
+        Style
+      </h1>
+    </div>
+  </header>
+
+
+  {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs' data-group='primary'>
+    <a class='item' data-tab='description'>Description</a>
+    <a class='item' data-tab='attributes'>Attributes</a>
+    <a class='item' data-tab='actions'>Actions</a>
+    <a class='item' data-tab='commentary'>Commentary</a>
+  </nav>
+
+  {{! Sheet Body }}
+  <section class='sheet-body'>
+
+    {{! Description Tab }}
+    <div class='tab' data-group='primary' data-tab='description'>
+      {{editor enrichedDescription target='system.description' engine='prosemirror' button=true editable=editable}}
+    </div>
+
+    {{! Attributes Tab }}
+    <div class='tab' data-group='primary' data-tab='attributes'>
+      <div class="form-group">
+        <label>Range:</label>
+        <input type="text" name="system.range" value="{{system.range}}" placeholder="1, 2" />
+      </div>
+    </div>
+
+    {{! Actions Tab }}
+    <div class='tab' data-group='primary' data-tab='actions'>
+      <div class="form-group">
+        <label>Unique Actions:</label>
+        <ul class="actions-list flexcol">
+          {{log uniqueActions}}
+          {{setVar "externalEditor" editor}}
+          {{log editor}}
+          {{#each uniqueActions as |action|}}
+            <li class="action-item flexcol">
+              <div class="form-group">
+                <label>Cost:</label>
+                <input type="text" name="system.uniqueActions.{{@index}}.cost" value="{{this.cost}}" />
+              </div>
+              <div class="form-group">
+                <label>Title:</label>
+                <input type="text" name="system.uniqueActions.{{@index}}.title" value="{{this.title}}" />
+              </div>
+              <div class="form-group">
+                <label>Description:</label>
+                {{externalEditor action.editor
+                target='system.uniqueActions.{{@index}}.description'
+                engine='prosemirror'
+                button=true
+                editable=true}}
+              </div>
+              <button type="button" class="delete-action">Remove</button>
+            </li>
+          {{/each}}
+        </ul>
+        <button type="button" class="add-action">Add Action</button>
+      </div>
+    </div>
+
+    {{! Commentary Tab }}
+    <div class='tab' data-group='primary' data-tab='commentary'>
+      <div class="form-group">
+        <label>Commentary:</label>
+        <textarea name="system.commentary" rows="4">{{system.commentary}}</textarea>
+      </div>
+    </div>
+
+  </section>
+</form>

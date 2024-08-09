@@ -8,6 +8,10 @@ import {
  * @extends {ActorSheet}
  */
 export class PanicActorSheet extends ActorSheet {
+  constructor(...args) {
+    super(...args);
+  }
+
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -48,6 +52,9 @@ export class PanicActorSheet extends ActorSheet {
 
     // Adding a pointer to CONFIG.PANIC
     context.config = CONFIG.PANIC;
+
+    // Add the editable state to the context
+    context.editable = this.editable;
 
     // Prepare character data and items.
     if (actorData.type == "character") {
@@ -107,6 +114,8 @@ export class PanicActorSheet extends ActorSheet {
     console.log("_prepareItems", context);
     // Initialize containers.
     const forms = [];
+    const styles = [];
+    // forms + styles
     const stances = [];
     // const spells = {
     //   0: [],
@@ -128,21 +137,35 @@ export class PanicActorSheet extends ActorSheet {
       if (i.type === "form") {
         forms.push(i);
       }
-      // Append to stances.
-      else if (i.type === "feature") {
-        stances.push(i);
+      // Append to style.
+      else if (i.type === "style") {
+        styles.push(i);
       }
-      // Append to spells.
-      // else if (i.type === "spell") {
-      //   if (i.system.spellLevel != undefined) {
-      //     spells[i.system.spellLevel].push(i);
-      //   }
-      // }
     }
+
+    for (
+      let index = 0;
+      index < Math.max(forms.length, styles.length);
+      index++
+    ) {
+      const form = forms[index];
+      const style = styles[index];
+
+      stances.push({
+        form: form,
+        style: style,
+      });
+    }
+
+    console.log(forms);
+    console.log(styles);
+    console.log(stances);
 
     // Assign and return
     context.forms = forms;
+    context.styles = styles;
     context.stances = stances;
+    context.editable = this.editable;
     // context.spells = spells;
   }
 
@@ -151,6 +174,19 @@ export class PanicActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+
+    // Edit Toggle Button Listener
+    html.find(".edit-toggle").click((ev) => {
+      ev.preventDefault();
+
+      // Toggle the editable state
+      this.editable = !this.editable;
+
+      // Re-render the sheet with the new state
+      this.render(false);
+    });
+
+    if (!this.isEditable) return;
 
     // Render the item sheet for viewing/editing prior to the editable check.
     html.on("click", ".item-edit", (ev) => {
@@ -175,7 +211,11 @@ export class PanicActorSheet extends ActorSheet {
 
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
-    if (!this.isEditable) return;
+
+    html.on("change", ".stance-select", (e) => {
+      const target = e.currentTarget;
+      console.log(target);
+    });
 
     // Add Inventory Item
     html.on("click", ".item-create", this._onItemCreate.bind(this));
