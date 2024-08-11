@@ -1,19 +1,33 @@
 <form class='sheet style-sheet' autocomplete='off'>
-  <header class='sheet-header'>
-    <img class='profile-img' src='{{item.img}}' data-edit='img' title='{{item.name}}' />
-    <div class='header-fields'>
-      <h1 class='item-name style-name flexrow'>
-        <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
-        Style
-      </h1>
+
+  <header class='sheet-header style-header'>
+    <img class='item-img profile-img' src='{{item.img}}' data-edit='img' title='{{item.name}}' />
+    <div class='header-fields item-name'>
+      <h1 class='item-name style-name'>
+        {{#if editable}}
+          <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
+          <span>Style</span>
+        {{else}}
+          {{item.name}} Style
+        {{/if}}
     </div>
+    </h1>
+    <div class="">
+      {{#if editable}}
+        <label>Range:</label>
+        <input style="width: 5em" type="text" name="system.range" value="{{system.range}}" placeholder="1, 2" />
+      {{else}}
+        Range: {{system.range}}
+      {{/if}}
+    </div>
+    <button type="button" class="edit-toggle"
+      style="position: absolute; top: 0rem; right: 0;">{{#if editable}}View{{else}}Edit{{/if}}</button>
+
   </header>
 
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs' data-group='primary'>
-    <a class='item' data-tab='description'>Description</a>
-    <a class='item' data-tab='attributes'>Attributes</a>
     <a class='item' data-tab='actions'>Actions</a>
     <a class='item' data-tab='commentary'>Commentary</a>
   </nav>
@@ -21,59 +35,76 @@
   {{! Sheet Body }}
   <section class='sheet-body'>
 
-    {{! Description Tab }}
-    <div class='tab' data-group='primary' data-tab='description'>
-      {{editor enrichedDescription target='system.description' engine='prosemirror' button=true editable=editable}}
-    </div>
-
-    {{! Attributes Tab }}
-    <div class='tab' data-group='primary' data-tab='attributes'>
-      <div class="form-group">
-        <label>Range:</label>
-        <input type="text" name="system.range" value="{{system.range}}" placeholder="1, 2" />
-      </div>
-    </div>
-
     {{! Actions Tab }}
     <div class='tab' data-group='primary' data-tab='actions'>
-      <div class="form-group">
-        <label>Unique Actions:</label>
+      <div class="">
+
+        <div class="style-enriched-description">
+          {{editor enrichedDescription target='system.description' engine='prosemirror' button=true editable=editable}}
+        </div>
+
+
         <ul class="actions-list flexcol">
-          {{log uniqueActions}}
-          {{setVar "externalEditor" editor}}
-          {{log editor}}
           {{#each uniqueActions as |action|}}
-            <li class="action-item flexcol">
-              <div class="form-group">
-                <label>Cost:</label>
-                <input type="text" name="system.uniqueActions.{{@index}}.cost" value="{{this.cost}}" />
-              </div>
-              <div class="form-group">
-                <label>Title:</label>
-                <input type="text" name="system.uniqueActions.{{@index}}.title" value="{{this.title}}" />
-              </div>
-              <div class="form-group">
-                <label>Description:</label>
-                {{externalEditor action.editor
-                target='system.uniqueActions.{{@index}}.description'
-                engine='prosemirror'
-                button=true
-                editable=true}}
-              </div>
-              <button type="button" class="delete-action">Remove</button>
-            </li>
+            {{#if ../editable}}
+
+              <li class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
+                <div class="form-group">
+                  <h2 style="background: green; margin-bottom: 0;">
+                    <input placeholder="Action Title..." type="text" style="font-size: 2rem; height: auto;"
+                      name="system.uniqueActions.{{@index}}.title" value="{{this.title}}" />
+                  </h2>
+                </div>
+
+                <div class="flexrow">
+                  <label>Cost:</label>
+                  <input type="text" placeholder="+2, 2 burn tokens, etc." name="system.uniqueActions.{{@index}}.cost"
+                    value="{{this.cost}}" />
+                </div>
+                <div class="">
+                  <label>Description:</label>
+                  <div class="flexcol action-description"
+                    style="padding: 1rem; background: rgba(106, 106, 106, 0.186); min-height: 10rem">
+                    {{editor action.editor
+                            target=(concat 'system.uniqueActions.' @index '.description')
+                            engine='prosemirror'
+                            button=true
+                            editable=../editable}}
+                  </div>
+                </div>
+                <button type="button" class="delete-action">Remove</button>
+              </li>
+            {{else}}
+
+              <li class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
+                <div class="form-group">
+                  <h2
+                    style="padding-left: 1em; background-color: green; margin-bottom: 0; color: white; border-bottom: 0;">
+                    {{action.cost}}: {{this.title}}
+                  </h2>
+                </div>
+
+                <div style="padding: 0.5em;">
+                  {{{action.editor}}}
+                </div>
+              </li>
+            {{/if}}
+
           {{/each}}
         </ul>
-        <button type="button" class="add-action">Add Action</button>
       </div>
+      {{#if editable}}
+        <button type="button" class="add-action">Add Action</button>
+      {{/if}}
     </div>
 
     {{! Commentary Tab }}
     <div class='tab' data-group='primary' data-tab='commentary'>
-      <div class="form-group">
-        <label>Commentary:</label>
-        <textarea name="system.commentary" rows="4">{{system.commentary}}</textarea>
-      </div>
+      {{editor enrichedCommentary
+              target='system.commentary'
+              engine='prosemirror'
+              button=true
+              editable=editable}}
     </div>
 
   </section>

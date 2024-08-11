@@ -20,6 +20,18 @@
   font-family: "Caveat Brush";
 }
 
+.font-large {
+  font-size: large;
+}
+
+.font-larger {
+  font-size: larger;
+}
+
+.font-xx-large {
+  font-size: xx-large;
+}
+
 /* Global styles */
 .window-app {
   font-family: "Caveat Brush", sans-serif;
@@ -270,6 +282,13 @@
 .panic-system .tox .tox-edit-area {
   padding: 0 8px;
 }
+.panic-system .edit-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  color: black;
+}
 .panic-system .resource-label {
   font-weight: bold;
 }
@@ -379,7 +398,83 @@
   color: red;
 }
 .panic-system .item-name {
-  justify-content: baseline;
+  justify-content: center;
+}
+.panic-system .item-img {
+  height: 48px !important;
+  width: 48px;
+  flex: 0 0 48px !important;
+}
+.panic-system .style-name {
+  display: flex;
+  align-items: center;
+}
+.panic-system .style-header {
+  background-color: red;
+  color: white;
+}
+.panic-system .edit-toggle {
+  width: auto;
+  margin-left: 0.25rem;
+}
+.panic-system ul.actions-list {
+  padding-left: 0;
+}
+.panic-system .style-sheet,
+.panic-system .form-sheet {
+  position: relative;
+}
+.panic-system .style-sheet .edit-toggle,
+.panic-system .form-sheet .edit-toggle {
+  background-color: white;
+  color: black;
+}
+.panic-system .style-enriched-description {
+  display: flex;
+  justify-content: stretch;
+  min-height: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.panic-system .style-enriched-description > * {
+  flex-grow: 1;
+  height: unset !important;
+}
+.panic-system .style-enriched-description .editor-content {
+  min-height: 3em;
+}
+.panic-system .style-enriched-description .prosemirror .editor-container {
+  margin-bottom: 3rem;
+}
+.panic-system .skill-description {
+  background-color: rgb(255, 217, 147);
+}
+.panic-system .skill-description h2 {
+  background-color: orange;
+}
+.panic-system .skill-description .prosemirror .editor-container {
+  margin-bottom: 3rem;
+}
+.panic-system .skill-description .editor-content {
+  min-height: 3em;
+}
+.panic-system .window-content:has(.style-sheet) {
+  background-color: pink !important;
+  background-image: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-left: red solid 0.5rem;
+  border-right: red solid 0.5rem;
+}
+.panic-system .window-content:has(.form-sheet) {
+  background-color: rgb(171, 175, 255) !important;
+  background-image: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-left: rgb(0, 102, 255) solid 0.5rem;
+  border-right: rgb(0, 102, 255) solid 0.5rem;
 }
 .panic-system .effects .item .effect-source,
 .panic-system .effects .item .effect-duration,

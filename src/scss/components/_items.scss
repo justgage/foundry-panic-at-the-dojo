@@ -127,5 +127,94 @@
 }
 
 .item-name {
-  justify-content: baseline;
+  justify-content: center;
+}
+
+.item-img {
+  height: 48px !important;
+  width: 48px;
+  flex: 0 0 48px !important;
+}
+
+.style-name {
+  display: flex;
+  align-items: center;
+}
+
+.style-header {
+  background-color: red;
+  color: white;
+}
+
+.edit-toggle {
+  width: auto;
+  margin-left: 0.25rem;
+}
+
+ul.actions-list {
+  padding-left: 0;
+}
+
+.style-sheet,
+.form-sheet {
+  position: relative;
+  & .edit-toggle {
+    background-color: white;
+    color: black;
+  }
+}
+
+.style-enriched-description {
+  display: flex;
+  justify-content: stretch;
+  min-height: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  & > * {
+    flex-grow: 1;
+    height: unset !important;
+  }
+  & .editor-content {
+    min-height: 3em;
+  }
+
+  & .prosemirror .editor-container {
+    margin-bottom: 3rem;
+  }
+}
+
+.skill-description {
+  background-color: rgb(255, 217, 147);
+
+  & h2 {
+    background-color: orange;
+  }
+
+  & .prosemirror .editor-container {
+    margin-bottom: 3rem;
+  }
+
+  & .editor-content {
+    min-height: 3em;
+  }
+}
+
+.window-content:has(.style-sheet) {
+  background-color: pink !important;
+  background-image: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-left: red solid 0.5rem;
+  border-right: red solid 0.5rem;
+}
+
+.window-content:has(.form-sheet) {
+  background-color: rgb(171, 175, 255) !important;
+  background-image: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-left: rgb(0, 102, 255) solid 0.5rem;
+  border-right: rgb(0, 102, 255) solid 0.5rem;
 }

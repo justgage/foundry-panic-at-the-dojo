@@ -1,0 +1,55 @@
+<div class="">
+    <ul class="actions-list flexcol">
+        {{log "action.hbs -> actions" uniqueActions}}
+        {{#each uniqueActions as |action|}}
+            {{#if ../editable}}
+
+                <li class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
+                    <div class="form-group">
+                        <h2 style="background: green; margin-bottom: 0;">
+                            <input placeholder="Action Title..." type="text" style="font-size: 2rem; height: auto;"
+                                name="system.uniqueActions.{{@index}}.title" value="{{this.title}}" />
+                        </h2>
+                    </div>
+
+                    <div class="flexrow">
+                        <label>Cost:</label>
+                        <input type="text" placeholder="+2, 2 burn tokens, etc."
+                            name="system.uniqueActions.{{@index}}.cost" value="{{this.cost}}" />
+                    </div>
+                    <div class="">
+                        <label>Description:</label>
+                        <div class="flexcol action-description"
+                            style="padding: 1rem; background: rgba(106, 106, 106, 0.186); min-height: 10rem">
+                            {{log "action.editor" action.editor}}
+                            {{editor action.editor
+                            target=(concat 'system.uniqueActions.' @index '.description')
+                            engine='prosemirror'
+                            button=true
+                            editable=../editable}}
+                        </div>
+                    </div>
+                    <button type="button" class="delete-action">Remove</button>
+                </li>
+            {{else}}
+
+                <li class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
+                    <div class="form-group">
+                        <h2
+                            style="padding-left: 1em; background-color: green; margin-bottom: 0; color: white; border-bottom: 0;">
+                            {{action.cost}}: {{this.title}}
+                        </h2>
+                    </div>
+
+                    <div style="padding: 0.5em;">
+                        {{{action.editor}}}
+                    </div>
+                </li>
+            {{/if}}
+
+        {{/each}}
+    </ul>
+</div>
+{{#if editable}}
+    <button type="button" class="add-action">Add Action</button>
+{{/if}}

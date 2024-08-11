@@ -29,6 +29,14 @@ export class PanicItem extends Item {
     return rollData;
   }
 
+  get uniqueActions() {
+    let uniqueActions = this.system.uniqueActions || [];
+    if (!Array.isArray(uniqueActions)) {
+      uniqueActions = Object.values(uniqueActions);
+    }
+    return uniqueActions;
+  }
+
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -39,7 +47,7 @@ export class PanicItem extends Item {
 
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const rollMode = game.settings.get('core', 'rollMode');
+    const rollMode = game.settings.get("core", "rollMode");
     const label = `[${item.type}] ${item.name}`;
 
     // If there's no roll data, send a chat message.
@@ -48,7 +56,7 @@ export class PanicItem extends Item {
         speaker: speaker,
         rollMode: rollMode,
         flavor: label,
-        content: item.system.description ?? '',
+        content: item.system.description ?? "",
       });
     }
     // Otherwise, create a roll and send a chat message from it.

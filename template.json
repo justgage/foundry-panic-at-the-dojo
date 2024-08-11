@@ -29,7 +29,8 @@
         "power": { "value": 0 },
         "weakness": { "value": 0 },
         "burning": { "value": 0 }
-      }
+      },
+      "actonDicePool": []
     },
     "npc": {
       "templates": ["base"],
@@ -47,15 +48,18 @@
     "form": {
       "templates": ["base"],
       "name": "Dance Form",
-      "altNames": ["Circle", "Crab"],
+      "alternativeNames": "Circle, Crab",
       "actionDice": ["d6", "6", "d4"],
       "abilityDescription": "",
-      "skillDescription": ""
+      "skillTitle": "",
+      "skillDescription": "",
+      "uniqueActions": []
     },
 
     "style": {
       "templates": ["base"],
       "name": "Pressure Style",
+      "abilityDescription": "",
       "range": [1, 2],
       "uniqueActions": [],
       "commentary": ""

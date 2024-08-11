@@ -142,7 +142,6 @@ export class PanicActorSheet extends ActorSheet {
         styles.push(i);
       }
     }
-
     for (
       let index = 0;
       index < Math.max(forms.length, styles.length);
@@ -150,11 +149,22 @@ export class PanicActorSheet extends ActorSheet {
     ) {
       const form = forms[index];
       const style = styles[index];
+      console.log(form, style);
 
-      stances.push({
-        form: form,
-        style: style,
-      });
+      const transformActions = (actions) => {
+        let uniqueActions = actions || [];
+        if (!Array.isArray(uniqueActions)) {
+          uniqueActions = Object.values(uniqueActions);
+        }
+        return uniqueActions;
+      };
+
+      const actions = [
+        ...transformActions(style.system.uniqueActions),
+        ...transformActions(form.system.uniqueActions),
+      ];
+
+      stances.push({ form, style, actions });
     }
 
     console.log(forms);

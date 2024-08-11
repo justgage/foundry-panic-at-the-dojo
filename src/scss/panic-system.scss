@@ -1,25 +1,24 @@
 // Add custom fonts by visiting and search https://fonts.google.com
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Permanent+Marker&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Permanent+Marker&display=swap");
 
 // Import utilities.
-@import 'utils/typography';
-@import 'utils/colors';
-@import 'utils/mixins';
-@import 'utils/variables';
+@import "utils/typography";
+@import "utils/colors";
+@import "utils/mixins";
+@import "utils/variables";
 
 /* Global styles */
-@import 'global/window';
-@import 'global/grid';
-@import 'global/flex';
+@import "global/window";
+@import "global/grid";
+@import "global/flex";
 
 /* Styles limited to panic-system sheets */
 .panic-system {
-  @import 'components/forms';
-  @import 'components/resource';
-  @import 'components/items';
-  @import 'components/effects';
-  @import 'components/character-sheet';
+  @import "components/forms";
+  @import "components/resource";
+  @import "components/items";
+  @import "components/effects";
+  @import "components/character-sheet";
 }

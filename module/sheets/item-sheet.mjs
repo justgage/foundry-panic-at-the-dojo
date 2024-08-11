@@ -61,6 +61,20 @@ export class PanicItemSheet extends ItemSheet {
       }
     );
 
+    context.enrichedCommentary = await TextEditor.enrichHTML(
+      this.item.system.commentary,
+      {
+        // Whether to show secret blocks in the finished html
+        secrets: this.document.isOwner,
+        // Necessary in v11, can be removed in v12
+        async: true,
+        // Data to fill in for inline rolls
+        rollData: this.item.getRollData(),
+        // Relative UUID resolution
+        relativeTo: this.item,
+      }
+    );
+
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
     context.flags = itemData.flags;
@@ -86,18 +100,26 @@ export class PanicItemSheet extends ItemSheet {
           relativeTo: this.item,
         }
       );
-    }
 
-    // Style ----------------
-    if (itemData.type == "style") {
-      console.log(
-        "itemData.system.uniqueActions->>",
-        itemData.system.uniqueActions
+      context.enrichedSkillDescription = await TextEditor.enrichHTML(
+        this.item.system.skillDescription,
+        {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Necessary in v11, can be removed in v12
+          async: true,
+          // Data to fill in for inline rolls
+          rollData: this.item.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.item,
+        }
       );
 
-      let uniqueActions = itemData.system.uniqueActions;
+      let uniqueActions =
+        foundry.utils.deepClone(itemData.system.uniqueActions) || [];
 
       if (!Array.isArray(uniqueActions)) {
+        console.log("fixing the array: ", uniqueActions);
         uniqueActions = Object.values(uniqueActions);
       }
 
@@ -105,7 +127,7 @@ export class PanicItemSheet extends ItemSheet {
         uniqueActions.map(async (uniqueAction) => {
           const action = foundry.utils.deepClone(uniqueAction);
 
-          action.editor = await TextEditor.enrichHTML(action, {
+          action.editor = await TextEditor.enrichHTML(action.description, {
             // Whether to show secret blocks in the finished html
             secrets: this.document.isOwner,
             // Necessary in v11, can be removed in v12
@@ -120,6 +142,44 @@ export class PanicItemSheet extends ItemSheet {
         })
       );
     }
+
+    // Style ----------------
+    if (itemData.type == "style") {
+      let uniqueActions = foundry.utils.deepClone(
+        itemData.system.uniqueActions
+      );
+      console.log(
+        "itemData.system.uniqueActions->>",
+        uniqueActions,
+        itemData.system.uniqueActions
+      );
+
+      if (!Array.isArray(uniqueActions)) {
+        console.log("fixing the array: ", uniqueActions);
+        uniqueActions = Object.values(uniqueActions);
+      }
+
+      context.uniqueActions = await Promise.all(
+        uniqueActions.map(async (uniqueAction) => {
+          const action = foundry.utils.deepClone(uniqueAction);
+
+          action.editor = await TextEditor.enrichHTML(action.description, {
+            // Whether to show secret blocks in the finished html
+            secrets: this.document.isOwner,
+            // Necessary in v11, can be removed in v12
+            async: true,
+            // Data to fill in for inline rolls
+            rollData: this.item.getRollData(),
+            // Relative UUID resolution
+            relativeTo: this.item,
+          });
+
+          return action;
+        })
+      );
+    }
+
+    context.editable = this.editable;
 
     return context;
   }
@@ -181,10 +241,10 @@ export class PanicItemSheet extends ItemSheet {
       // Get the current actionDice array
       const actionDice = this.actionDice();
 
-      console.log("add dice -->", actionDice);
+      const nextDice = actionDice[actionDice.length - 1] || "d6";
 
       // Add a default value to the array
-      actionDice.push("d6"); // Default new dice is d6, you can change it as needed
+      actionDice.push(nextDice);
 
       // Update the item with the new actionDice array
       this.item.update({ "system.actionDice": actionDice });
@@ -207,6 +267,17 @@ export class PanicItemSheet extends ItemSheet {
       this.item.update({ "system.actionDice": actionDice });
     });
 
+    html.find(".edit-toggle").click((ev) => {
+      ev.preventDefault();
+      console.log("ITEM EDIT");
+
+      // Toggle the editable state
+      this.editable = !this.editable;
+
+      // Re-render the sheet with the new state
+      this.render(false);
+    });
+
     // STYLE -=-=-=--=-=-=-=-=-=-=-=-=-
 
     // Add new action
@@ -214,11 +285,10 @@ export class PanicItemSheet extends ItemSheet {
       console.log("ADD ACTION!");
       ev.preventDefault();
 
-      let uniqueActions = foundry.utils.deepClone(
-        this.item.system.uniqueActions
-      );
+      let uniqueActions =
+        foundry.utils.deepClone(this.item.system.uniqueActions) || [];
       if (!Array.isArray(uniqueActions)) {
-        uniqueActions = [];
+        uniqueActions = Object.values(uniqueActions);
       }
 
       uniqueActions.push({ cost: "", title: "", description: "" });

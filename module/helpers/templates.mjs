@@ -10,6 +10,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/panic-system/templates/actor/parts/actor-effects.hbs",
     // Item partials
     "systems/panic-system/templates/item/parts/item-effects.hbs",
+    "systems/panic-system/templates/item/parts/action.hbs",
     "systems/panic-system/templates/actor/parts/actor-stances.hbs",
   ]);
 };
