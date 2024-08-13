@@ -93,6 +93,14 @@ export class PanicActorSheet extends ActorSheet {
     return context;
   }
 
+  ensureArray(maybeObject) {
+    let arr = maybeObject || [];
+    if (!Array.isArray(arr)) {
+      arr = Object.values(maybeObject);
+    }
+    return arr;
+  }
+
   /**
    * Character-specific context modifications
    *
@@ -151,17 +159,9 @@ export class PanicActorSheet extends ActorSheet {
       const style = styles[index];
       console.log(form, style);
 
-      const transformActions = (actions) => {
-        let uniqueActions = actions || [];
-        if (!Array.isArray(uniqueActions)) {
-          uniqueActions = Object.values(uniqueActions);
-        }
-        return uniqueActions;
-      };
-
       const actions = [
-        ...transformActions(style.system.uniqueActions),
-        ...transformActions(form.system.uniqueActions),
+        ...this.ensureArray(style.system.uniqueActions),
+        ...this.ensureArray(form.system.uniqueActions),
       ];
 
       stances.push({ form, style, actions });
@@ -184,6 +184,41 @@ export class PanicActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+
+    html.find(".action-dice-roll").click(async (ev) => {
+      // Roll all action dice at once
+      const diceToRoll = this.ensureArray(
+        this.actor.system.currentStance.actionDice
+      ).join(" + ");
+      const roll = await new Roll(diceToRoll).roll({ async: true });
+
+      // Check if Dice So Nice is active and trigger the animation
+      if (game.dice3d) {
+        await game.dice3d.showForRoll(roll, game.user, true);
+      }
+
+      // Save the rolled results to the Actor's data
+      const rolledResults = roll.dice.map((t) => t);
+      this.actor.update({ "system.currentStance.rolledDice": rolledResults });
+
+      // Create a formatted chat message
+      let chatContent = `<h2>${this.actor.name} rolls their Action Dice!</h2><div class="dice-rolls">`;
+      rolledResults.forEach((result, index) => {
+        chatContent += `<div class="dice">
+                    ${result.results[0].result}_ON_D${result.faces}
+                  </div>`;
+      });
+      chatContent += `</div>`;
+
+      console.log("Chat message:", chatContent, roll);
+
+      // Send the message to the chat
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        content: chatContent,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      });
+    });
 
     // Edit Toggle Button Listener
     html.find(".edit-toggle").click((ev) => {
@@ -223,8 +258,14 @@ export class PanicActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
 
     html.on("change", ".stance-select", (e) => {
-      const target = e.currentTarget;
-      console.log(target);
+      const id = e.currentTarget.getAttribute("value");
+      this.actor.update({
+        "system.currentStance": {
+          actionDice: this.actor.items
+            .map((e) => e)
+            .filter((e) => e.type == "form")[id]?.system?.actionDice,
+        },
+      });
     });
 
     // Add Inventory Item

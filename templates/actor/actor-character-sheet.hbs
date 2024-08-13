@@ -52,9 +52,19 @@
               </div>
             </div>
           {{/each}}
-        </div>
 
+        </div>
       </div>
+      {{!-- Display action dice character currently has selected --}}
+      {{#if system.currentStance.actionDice}}
+        <button class="dice">
+          {{#each system.actionDice as |dice|}}
+            <span class="text-xl">{{dice}}</span>
+          {{/each}}
+        </button>
+      {{else}}
+        Please select a stance
+      {{/if}}
   </header>
 
   {{!-- Sheet Tab Navigation --}}
