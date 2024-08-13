@@ -157,7 +157,6 @@ export class PanicActorSheet extends ActorSheet {
     ) {
       const form = forms[index];
       const style = styles[index];
-      console.log(form, style);
 
       const actions = [
         ...this.ensureArray(style.system.uniqueActions),
@@ -166,10 +165,6 @@ export class PanicActorSheet extends ActorSheet {
 
       stances.push({ form, style, actions });
     }
-
-    console.log(forms);
-    console.log(styles);
-    console.log(stances);
 
     // Assign and return
     context.forms = forms;
@@ -185,6 +180,16 @@ export class PanicActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find(".select-action-dice").click(async (ev) => {
+      const index = new Number(ev.currentTarget.value);
+
+      this.actor.update({ "system.currentStance.selectedDice": index });
+    });
+
+    html.find(".spend-action").click(async (ev) => {
+      // try to spend an action
+    });
+
     html.find(".action-dice-roll").click(async (ev) => {
       // Roll all action dice at once
       const diceToRoll = this.ensureArray(
@@ -198,19 +203,22 @@ export class PanicActorSheet extends ActorSheet {
       }
 
       // Save the rolled results to the Actor's data
-      const rolledResults = roll.dice.map((t) => t);
+      const rolledResults = roll.dice.map((d) => ({
+        face: d.faces,
+        result: d.results[0].result,
+        used: false,
+      }));
+
       this.actor.update({ "system.currentStance.rolledDice": rolledResults });
 
       // Create a formatted chat message
       let chatContent = `<h2>${this.actor.name} rolls their Action Dice!</h2><div class="dice-rolls">`;
-      rolledResults.forEach((result, index) => {
+      rolledResults.forEach((dice, index) => {
         chatContent += `<div class="dice">
-                    ${result.results[0].result}_ON_D${result.faces}
+                    ${dice.result}_ON_D${dice.face}
                   </div>`;
       });
       chatContent += `</div>`;
-
-      console.log("Chat message:", chatContent, roll);
 
       // Send the message to the chat
       await ChatMessage.create({
@@ -258,12 +266,12 @@ export class PanicActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
 
     html.on("change", ".stance-select", (e) => {
-      const id = e.currentTarget.getAttribute("value");
+      const index = e.currentTarget.getAttribute("value");
       this.actor.update({
         "system.currentStance": {
-          actionDice: this.actor.items
-            .map((e) => e)
-            .filter((e) => e.type == "form")[id]?.system?.actionDice,
+          selectedDice: -1,
+          rolledDice: [],
+          index: index,
         },
       });
     });

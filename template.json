@@ -24,10 +24,10 @@
         }
       },
       "currentStance": {
-        "actionDice": [],
-        "rolledDice": []
+        "rolledDice": [],
+        "selectedDice": -1,
+        "index": -1
       },
-      "actionDice": [],
       "tokens": {
         "speed": { "value": 0 },
         "iron": { "value": 0 },

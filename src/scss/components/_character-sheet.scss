@@ -137,3 +137,24 @@
     background-color: #fffea9;
   }
 }
+
+.action-dice-tray {
+  position: absolute;
+  top: 30px;
+  right: -5rem;
+  width: 5rem;
+  background: url(/ui/parchment.jpg) repeat;
+  padding: 9px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 0 20px var(--color-shadow-dark);
+  z-index: -1;
+
+  & input[type="radio"] {
+    display: none;
+  }
+
+  & button:has(input[checked]) {
+    background-color: #fffea9;
+  }
+}

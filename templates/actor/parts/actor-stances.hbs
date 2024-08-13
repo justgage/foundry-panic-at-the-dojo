@@ -3,45 +3,45 @@
     <li class="stance">
       {{#if (and stance.form stance.style)}}
         <h2 class="stance-header">
-          <input type="radio" class="stance-select" name="stance" id="stance-{{id}}" value="{{id}}" />
+          <input type="radio" id="stance-{{id}}" value="{{id}}" {{setCheckedStr id ../system.currentStance.index }}
+            class="stance-select" name="stance" />
           <label class="stance-label" for="stance-{{id}}">
             <span>{{stance.style.name}} {{stance.form.name}}</span>
             <span style="flex-grow: 0;" class="range">(Range: {{stance.style.system.range}})</span>
-            <button style="flex-grow: 0;" class="dice text-xl action-dice-roll">
+            <button style="flex-grow: 0;" class="dice font-xx-large action-dice-roll">
               {{#each stance.form.system.actionDice as |dice| ~}}
                 ANY_ON_{{dice}}
               {{/each}}
             </button>
           </label>
         </h2>
-
-
-        <section class="grid-span-1">
-    <li class='item flexrow' data-item-id='{{stance.style._id}}'>
-      {{#if stance.style}}
-        {{#if ../editable}}
-          <div class='item-name'>
-            <div class='item-image'>
-              <a class='rollable' data-roll-type='item'>
-                <img src='{{stance.style.img}}' title='{{stance.style.name}}' width='24' height='24' />
+    </li>
+    <section class="grid-span-1">
+      <li class='item flexrow' data-item-id='{{stance.style._id}}'>
+        {{#if stance.style}}
+          {{#if ../editable}}
+            <div class='item-name'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item'>
+                  <img src='{{stance.style.img}}' title='{{stance.style.name}}' width='24' height='24' />
+                </a>
+              </div>
+              <h4 class="style-title">{{stance.style.name}} Style</h4>
+              <div>Range: {{stance.style.system.range}}</div>
+            </div>
+            <div class='item-controls'>
+              <a class='item-control item-edit' title='{{localize "DOCUMENT.Edit" type="style"}}'>
+                <i class='fas fa-edit'></i>
+              </a>
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type="style"}}'>
+                <i class='fas fa-trash'></i>
               </a>
             </div>
-            <h4 class="style-title">{{stance.style.name}} Style</h4>
-            <div>Range: {{stance.style.system.range}}</div>
-          </div>
-          <div class='item-controls'>
-            <a class='item-control item-edit' title='{{localize "DOCUMENT.Edit" type="style"}}'>
-              <i class='fas fa-edit'></i>
-            </a>
-            <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type="style"}}'>
-              <i class='fas fa-trash'></i>
-            </a>
-          </div>
+          {{/if}}
+        {{else}}
+          <span>Please drag a Style onto the page!</span>
         {{/if}}
-      {{else}}
-        <span>Please drag a Style onto the page!</span>
-      {{/if}}
-    </li>
+      </li>
     </section>
 
     <section class="grid-span-1">
@@ -57,7 +57,7 @@
               <h4 class="form-title">{{stance.form.name}} Form</h4>
               <button class="dice">
                 {{#each stance.form.system.actionDice as |dice|}}
-                  <span class="text-xl">{{dice}}</span>
+                  <span class="font-xx-large">{{dice}}</span>
                 {{/each}}
               </button>
             </div>
@@ -78,8 +78,32 @@
             {{#each stance.actions as |action|}}
       <li class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
         <div class="form-group">
-          <h2 style="padding-left: 1em; background-color: green; margin-bottom: 0; color: white; border-bottom: 0;">
-            {{action.cost}}: {{action.title}}
+          <h2 class="flexrow"
+            style="padding-left: 1em; background-color: green; margin-bottom: 0; color: white; border-bottom: 0;">
+
+            {{!-- Start of cost --}}
+
+            <div class="cost-options flexrow">
+              {{#each (parseActionCost action.cost)}}
+                <div class="cost-option">
+                  {{#if this.resource}}
+                    <label>
+                      <input type="radio" name="cost" value="{{this.resource}}|{{this.amount}}">
+                      {{this.amount}} {{capitalize this.resource}}
+                    </label>
+                  {{else}}
+                    <label>
+                      <input type="radio" name="cost" value="dice|{{this.amount}}">
+                      +{{this.amount}}
+                    </label>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+
+            {{!-- end cost --}}
+
+            : {{action.title}} <button>Spend</button>
           </h2>
         </div>
         <div style="padding: 0.5em;">

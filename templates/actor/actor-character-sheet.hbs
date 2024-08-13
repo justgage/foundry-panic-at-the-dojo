@@ -39,7 +39,7 @@
           </div>
 
           {{#each system.tokens as |ability key|}}
-
+            {{!-- TOKENS! --}}
             <div class="token token-{{key}}">
               <label for="system.tokens.{{key}}.value" class="resource-label" data-roll="d20+@tokens.{{key}}.mod"
                 data-label="{{localize (lookup @root.config.tokens key)}}">{{localize (lookup @root.config.tokens key)}}</label>
@@ -56,15 +56,21 @@
         </div>
       </div>
       {{!-- Display action dice character currently has selected --}}
-      {{#if system.currentStance.actionDice}}
-        <button class="dice">
-          {{#each system.actionDice as |dice|}}
-            <span class="text-xl">{{dice}}</span>
+      <div class="action-dice-tray">
+        {{#if (not (eq system.currentStance.rolledDice [])) }}
+          Action Dice:
+          {{#each system.currentStance.rolledDice as |dice index|}}
+            {{log dice}}
+            <button class="dice">
+              <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
+                {{setCheckedStr index ../system.currentStance.selectedDice}} value="{{index}}" />
+              <label for="action-dice-{{index}}" class="font-xx-large">{{dice.result}}_ON_D{{dice.face}}</label>
+            </button>
           {{/each}}
-        </button>
-      {{else}}
-        Please select a stance
-      {{/if}}
+        {{else}}
+          Please select a stance
+        {{/if}}
+      </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
