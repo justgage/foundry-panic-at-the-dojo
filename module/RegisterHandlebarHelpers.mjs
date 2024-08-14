@@ -1,4 +1,4 @@
-import { parseActionCost } from "./helpers/costParser.mjs";
+import { canAfford, parseActionCost } from "./helpers/costParser.mjs";
 
 export function RegisterHandlebarHelpers() {
   Handlebars.registerHelper("toLowerCase", function (str) {
@@ -30,6 +30,7 @@ export function RegisterHandlebarHelpers() {
     },
 
     parseActionCost: parseActionCost,
+    canAfford: canAfford,
 
     capitalize: function (text) {
       if (typeof text !== "string") return text;
@@ -41,6 +42,26 @@ export function RegisterHandlebarHelpers() {
         return "checked";
       } else {
         return "";
+      }
+    },
+
+    setDisabled(value) {
+      if (value) {
+        return "disabled";
+      } else {
+        return "";
+      }
+    },
+
+    json(item) {
+      return JSON.stringify(item);
+    },
+
+    ifClass: function (cond, a, b = "") {
+      if (cond) {
+        return a;
+      } else {
+        return b;
       }
     },
 

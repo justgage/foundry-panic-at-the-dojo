@@ -1,4 +1,9 @@
 import {
+  canAfford,
+  parseActionCost,
+  spendCost,
+} from "../helpers/costParser.mjs";
+import {
   onManageActiveEffect,
   prepareActiveEffectCategories,
 } from "../helpers/effects.mjs";
@@ -121,25 +126,25 @@ export class PanicActorSheet extends ActorSheet {
   _prepareItems(context) {
     console.log("_prepareItems", context);
     // Initialize containers.
+
+    // forms + styles
+    const { stances, forms, styles } = this.makeStances(context.items);
+
+    // Assign and return
+    context.forms = forms;
+    context.styles = styles;
+    context.stances = stances;
+    context.editable = this.editable;
+    // context.spells = spells;
+  }
+
+  makeStances(items) {
     const forms = [];
     const styles = [];
-    // forms + styles
     const stances = [];
-    // const spells = {
-    //   0: [],
-    //   1: [],
-    //   2: [],
-    //   3: [],
-    //   4: [],
-    //   5: [],
-    //   6: [],
-    //   7: [],
-    //   8: [],
-    //   9: [],
-    // };
 
     // Iterate through items, allocating to containers
-    for (let i of context.items) {
+    for (let i of items) {
       i.img = i.img || Item.DEFAULT_ICON;
       // Append to forms.
       if (i.type === "form") {
@@ -159,19 +164,16 @@ export class PanicActorSheet extends ActorSheet {
       const style = styles[index];
 
       const actions = [
-        ...this.ensureArray(style.system.uniqueActions),
-        ...this.ensureArray(form.system.uniqueActions),
+        ...this.ensureArray(style?.system?.uniqueActions),
+        ...this.ensureArray(form?.system?.uniqueActions),
       ];
 
-      stances.push({ form, style, actions });
+      const name = `${style.name} ${form.name}`;
+
+      stances.push({ name, form, style, actions });
     }
 
-    // Assign and return
-    context.forms = forms;
-    context.styles = styles;
-    context.stances = stances;
-    context.editable = this.editable;
-    // context.spells = spells;
+    return { stances, forms, styles };
   }
 
   /* -------------------------------------------- */
@@ -187,11 +189,53 @@ export class PanicActorSheet extends ActorSheet {
     });
 
     html.find(".spend-action").click(async (ev) => {
-      // try to spend an action
+      const { actionIndex, cost } = ev.target.dataset;
+      console.log({ cost, actionIndex });
+      const costs = parseActionCost(cost);
+
+      const applicableCosts = costs.filter((cost) =>
+        canAfford(this.actor, cost)
+      );
+
+      console.log({ applicableCosts });
+
+      if (applicableCosts[0]) {
+        spendCost(this.actor, applicableCosts[0]);
+        // Create a formatted chat message
+        const actionHtml = $(ev.target).parents(".action-item")[0].outerHTML;
+        let chatContent = `
+        <div class="panic-system">
+        <h3>${this.actor.name} spends: <b>${applicableCosts[0].amount} ${applicableCosts[0].resource}</b> to preform:</h3>
+        <section>
+        ${actionHtml}
+        </section>
+        </div>`;
+
+        // Send the message to the chat
+        await ChatMessage.create({
+          speaker: ChatMessage.getSpeaker({ actor: this }),
+          content: chatContent,
+          type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        });
+      } else {
+        ui.notifications.error(
+          `Sorry, you can't pay the cost of that action. Cost is: ${cost}`
+        );
+      }
     });
 
     html.find(".action-dice-roll").click(async (ev) => {
       // Roll all action dice at once
+      const index = ev.currentTarget.dataset.stanceId;
+
+      this.actor.update({
+        "system.currentStance": {
+          selectedDice: -1,
+          rolledDice: [],
+          index: index,
+        },
+      });
+
       const diceToRoll = this.ensureArray(
         this.actor.system.currentStance.actionDice
       ).join(" + ");
@@ -211,12 +255,17 @@ export class PanicActorSheet extends ActorSheet {
 
       this.actor.update({ "system.currentStance.rolledDice": rolledResults });
 
+      const name = this.currentStance().name;
+
       // Create a formatted chat message
-      let chatContent = `<h2>${this.actor.name} rolls their Action Dice!</h2><div class="dice-rolls">`;
+      let chatContent = `<h2>${this.actor.name} goes into ${name} stance!</h2>
+      <div class="dice-rolls">
+      Action Dice: 
+      `;
       rolledResults.forEach((dice, index) => {
-        chatContent += `<div class="dice">
+        chatContent += `<span class="dice">
                     ${dice.result}_ON_D${dice.face}
-                  </div>`;
+                  </span>`;
       });
       chatContent += `</div>`;
 
@@ -309,6 +358,12 @@ export class PanicActorSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+  }
+
+  currentStance() {
+    return this.makeStances(this.actor.items).stances[
+      this.actor.system.currentStance.index
+    ];
   }
 
   /**

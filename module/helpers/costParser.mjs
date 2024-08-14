@@ -22,7 +22,7 @@ function parseActionCost(costString) {
 
       // Handling multi-word tokens (e.g., '3 Speed Tokens')
       const multiWordMatch = section.match(
-        /(\d+)\s*(speed|iron|power|weakness|burning|hp|basic|other) tokens/i
+        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other) tokens/i
       );
       if (multiWordMatch) {
         const amount = parseInt(multiWordMatch[1], 10);
@@ -33,7 +33,7 @@ function parseActionCost(costString) {
 
       // Handling specific tokens (e.g., '-1 Burn', '-2 HP')
       const tokenMatch = section.match(
-        /(-\d+)\s*(speed|iron|power|weakness|burning|hp|basic|other)/i
+        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other)/i
       );
       if (tokenMatch) {
         const amount = parseInt(tokenMatch[1], 10);
@@ -42,25 +42,22 @@ function parseActionCost(costString) {
         continue;
       }
 
-      // Handling dice (e.g., 'd6', '4', '5')
-      const diceMatch = section.match(
-        /(\d+|d\d+)\s*(speed|iron|power|weakness|burning|hp|basic|other)?/i
-      );
-      if (diceMatch) {
-        const amount = diceMatch[1];
-        const resource = diceMatch[2] ? diceMatch[2].toLowerCase() : null;
-        costs.push({ resource, amount });
-        continue;
-      }
-
       // Handling phrases like 'Destroy 1 Copy' or 'Gain 1 Burning Token'
       const actionMatch = section.match(
-        /(destroy|gain)\s+(\d+)\s*(copy|burning token)/i
+        /(destroy|gain)\s*(\d\d*)\s*(copy|burning token)/i
       );
       if (actionMatch) {
         const amount = parseInt(actionMatch[2], 10);
         const resource = actionMatch[3] ? actionMatch[3].toLowerCase() : null;
         costs.push({ resource, amount });
+        continue;
+      }
+
+      // Handling dice (e.g., 'd6', '4', '5')
+      const diceMatch = section.match(/(\d\d*)+/i);
+      if (diceMatch) {
+        const amount = diceMatch[1];
+        costs.push({ resource: "dice", amount });
         continue;
       }
 
@@ -71,62 +68,90 @@ function parseActionCost(costString) {
     }
   }
 
-  console.log("COSTs", costs, costString);
+  // console.log("PARSE", costString, "->", costs);
 
   return costs;
 }
 
-export async function spendCost(actor, cost, choice = null) {
+export function canAfford(actor, cost) {
+  let parsedCost = cost;
+  if (typeof cost == "string") {
+    parsedCost = parseActionCost(cost);
+  }
+
+  return spendCost(actor, parsedCost, true).success;
+}
+
+/**
+ * Tries to spend the cost.
+ * @param {*} actor
+ * @param {*} cost
+ * @param {*} choice which
+ * @param {boolean} dry_run will not actually mutate the actor if true
+ * @returns
+ */
+export function spendCost(actor, cost, dry_run = false) {
   const updates = {};
   let success = true;
 
-  for (let c of cost) {
-    let resource = c.resource;
-    let amount = c.amount;
+  // for (let c of cost) {
+  const c = cost;
+  let resource = c.resource;
+  let amount = new Number(c.amount);
 
-    if (resource === "or") {
-      if (choice) {
-        resource = choice;
-      } else {
-        console.error("A choice must be provided for 'or' costs.");
-        return false;
-      }
-    }
+  if (resource === "dice") {
+    const actionDice = actor.system.currentStance.rolledDice;
+    let diceIndex = actor.system.currentStance.selectedDice;
 
-    if (resource === "actionDice") {
-      const actionDice = actor.system.currentStance.rolledDice;
-      const diceIndex = actionDice.findIndex(
+    if (diceIndex == -1) {
+      diceIndex = actionDice.findIndex(
         (die) => !die.used && die.result >= amount
       );
-
-      if (diceIndex >= 0) {
-        updates[`system.currentStance.rolledDice.${diceIndex}.used`] = true;
-      } else {
-        success = false;
-        break;
-      }
-    } else if (resource === "HP") {
-      if (actor.system.attributes.hp.value >= amount) {
-        updates["system.attributes.hp.value"] =
-          actor.system.attributes.hp.value - amount;
-      } else {
-        success = false;
-        break;
-      }
-    } else {
-      if (actor.system.tokens[resource].value >= amount) {
-        updates[`system.tokens.${resource}.value`] =
-          actor.system.tokens[resource].value - amount;
-      } else {
-        success = false;
-        break;
-      }
     }
+
+    const maybeDice = actionDice[diceIndex];
+
+    if (maybeDice && !maybeDice.used && maybeDice.result >= amount) {
+      const newRolledDice = foundry.utils
+        .deepClone(actor.system.currentStance.rolledDice)
+        .map((dice, index) =>
+          index == diceIndex ? { ...dice, used: true } : dice
+        );
+
+      updates[`system.currentStance.rolledDice`] = newRolledDice;
+    } else {
+      console.warn({
+        maybeDice,
+        amount,
+      });
+      success = false;
+      // break;
+    }
+  } else if (resource === "hp") {
+    if (actor.system.health.value >= amount) {
+      updates["system.health.value"] = actor.system.health.value - amount;
+    } else {
+      success = false;
+      // break;
+    }
+  } else if (actor.system.tokens[resource]) {
+    if (actor.system.tokens[resource].value >= amount) {
+      updates[`system.tokens.${resource}.value`] =
+        actor.system.tokens[resource].value - amount;
+    } else {
+      success = false;
+      // break;
+    }
+  } else {
+    console.warn(`Spending ${resource} not implemented`);
+    success = false;
+  }
+  // }
+
+  let promise = null;
+  if (success && !dry_run) {
+    promise = actor.update(updates);
   }
 
-  if (success) {
-    await actor.update(updates);
-  }
-
-  return success;
+  return { success, updates, promise };
 }

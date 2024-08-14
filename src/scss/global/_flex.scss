@@ -44,3 +44,16 @@
   justify-content: center;
   text-align: center;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

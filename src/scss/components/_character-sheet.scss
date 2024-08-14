@@ -101,41 +101,64 @@
   @include round-input;
 }
 
+.stance-list {
+  overflow: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .stance {
+  list-style-type: none;
   padding: 0.25rem;
   border-radius: 4px;
   margin-bottom: 0.5rem;
   background-color: #fffff6cd;
+  opacity: 0.7;
 
-  & h2 {
+  & button {
+    border-style: solid;
+  }
+
+  & > h2 {
     margin-left: -0.25rem;
     margin-right: -0.25rem;
-    margin-top: -0.25rem;
     background-color: rgb(255, 215, 34);
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    margin-top: 0;
+  }
+
+  & h2 {
+    margin-top: -0.25rem;
     border-radius: 4px;
     border-bottom-right-radius: 20px;
     border-bottom: none;
   }
-  & .stance-title {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: stretch;
-    & .dice {
-      padding-right: 1rem;
-    }
-    & .range {
-      font-size: small;
-    }
-  }
-  & .stance-label {
-    flex-grow: 1;
-    cursor: pointer;
-    padding-left: 0.25em;
-  }
-  &:has(input[type="radio"]:checked) {
+
+  &:has(.stance-select:checked) {
+    opacity: 1;
     background-color: #fffea9;
   }
+}
+
+.stance-title {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: stretch;
+  & .dice {
+    padding-right: 1rem;
+  }
+  & .range {
+    font-size: small;
+  }
+}
+
+.stance-label {
+  flex-grow: 1;
+  cursor: pointer;
+  padding-left: 0.25em;
 }
 
 .action-dice-tray {
@@ -156,5 +179,38 @@
 
   & button:has(input[checked]) {
     background-color: #fffea9;
+  }
+
+  & button:disabled {
+    opacity: 0.5;
+    background-color: gray;
+  }
+}
+
+.not-afford label {
+  background-color: gray !important;
+  color: rgb(63, 63, 63);
+  cursor: not-allowed !important;
+}
+
+.cost-options {
+  & label {
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+    background-color: #5d3201;
+    border-radius: 9999px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    & input[type="radio"] {
+      display: none;
+    }
+    &:has(input[type="radio"]:checked) {
+      background-color: #ff8800;
+      box-shadow: orange 0 0 2px 3px;
+    }
   }
 }

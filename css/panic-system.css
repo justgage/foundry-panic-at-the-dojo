@@ -191,6 +191,14 @@
   grid-column-end: span 12;
 }
 
+.width-auto {
+  width: auto;
+}
+
+.rounded-full {
+  border-radius: 999999px;
+}
+
 .flex-group-center,
 .flex-group-left,
 .flex-group-right {
@@ -236,7 +244,28 @@
   text-align: center;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+/* chat messages */
+.message-content .spend-action {
+  display: none;
+}
+
 /* Styles limited to panic-system sheets */
+.panic-system {
+  font-family: "Caveat Brush", sans-serif;
+}
 .panic-system .item-form {
   font-family: "Caveat Brush", sans-serif;
 }
@@ -258,7 +287,6 @@
   flex: 1;
 }
 .panic-system .sheet-header h1.charname {
-  height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
@@ -581,40 +609,57 @@
   border-radius: 999px;
   background-origin: border-box;
 }
+.panic-system .stance-list {
+  overflow: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
 .panic-system .stance {
+  list-style-type: none;
   padding: 0.25rem;
   border-radius: 4px;
   margin-bottom: 0.5rem;
   background-color: rgba(255, 255, 246, 0.8039215686);
+  opacity: 0.7;
 }
-.panic-system .stance h2 {
+.panic-system .stance button {
+  border-style: solid;
+}
+.panic-system .stance > h2 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
-  margin-top: -0.25rem;
   background-color: rgb(255, 215, 34);
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  margin-top: 0;
+}
+.panic-system .stance h2 {
+  margin-top: -0.25rem;
   border-radius: 4px;
   border-bottom-right-radius: 20px;
   border-bottom: none;
 }
-.panic-system .stance .stance-title {
+.panic-system .stance:has(.stance-select:checked) {
+  opacity: 1;
+  background-color: #fffea9;
+}
+.panic-system .stance-title {
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: stretch;
 }
-.panic-system .stance .stance-title .dice {
+.panic-system .stance-title .dice {
   padding-right: 1rem;
 }
-.panic-system .stance .stance-title .range {
+.panic-system .stance-title .range {
   font-size: small;
 }
-.panic-system .stance .stance-label {
+.panic-system .stance-label {
   flex-grow: 1;
   cursor: pointer;
   padding-left: 0.25em;
-}
-.panic-system .stance:has(input[type=radio]:checked) {
-  background-color: #fffea9;
 }
 .panic-system .action-dice-tray {
   position: absolute;
@@ -633,6 +678,33 @@
 }
 .panic-system .action-dice-tray button:has(input[checked]) {
   background-color: #fffea9;
+}
+.panic-system .action-dice-tray button:disabled {
+  opacity: 0.5;
+  background-color: gray;
+}
+.panic-system .not-afford label {
+  background-color: gray !important;
+  color: rgb(63, 63, 63);
+  cursor: not-allowed !important;
+}
+.panic-system .cost-options label {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background-color: #5d3201;
+  border-radius: 9999px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.panic-system .cost-options label input[type=radio] {
+  display: none;
+}
+.panic-system .cost-options label:has(input[type=radio]:checked) {
+  background-color: #ff8800;
+  box-shadow: orange 0 0 2px 3px;
 }
 
 /*# sourceMappingURL=panic-system.css.map */

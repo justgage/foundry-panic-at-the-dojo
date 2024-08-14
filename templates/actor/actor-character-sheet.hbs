@@ -61,9 +61,11 @@
           Action Dice:
           {{#each system.currentStance.rolledDice as |dice index|}}
             {{log dice}}
-            <button class="dice">
-              <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
-                {{setCheckedStr index ../system.currentStance.selectedDice}} value="{{index}}" />
+            <button class="dice" {{setDisabled dice.used }}>
+              {{#if (not dice.used)}}
+                <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
+                  {{setCheckedStr index ../system.currentStance.selectedDice}} value="{{index}}" />
+              {{/if}}
               <label for="action-dice-{{index}}" class="font-xx-large">{{dice.result}}_ON_D{{dice.face}}</label>
             </button>
           {{/each}}

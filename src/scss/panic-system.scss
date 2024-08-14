@@ -14,8 +14,10 @@
 @import "global/grid";
 @import "global/flex";
 
+@import "chat";
 /* Styles limited to panic-system sheets */
 .panic-system {
+  font-family: "Caveat Brush", sans-serif;
   @import "components/forms";
   @import "components/resource";
   @import "components/items";
