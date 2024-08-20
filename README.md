@@ -2,25 +2,46 @@
 
 ![Foundry v11](https://img.shields.io/badge/foundry-v11-green)
 
-This system is a panic-system system that you can use as a starting point for building your own custom systems. It's similar to Simple World-building, but has examples of creating attributes in code rather than dynamically through the UI.
+This is a custom System using Foundry VTT. This is very much an Alpha-level might eat your cat (I mean game, game) at any moment. I wouldn't rely on this module but I'm putting it up so others can at least TRY it.
 
-## Usage
+## How to Dev on this, or at least how I do.
 
-There are two ways to get started: using the Panic system generator command or manually renaming and updating files.
+This is going to most likely require some CSS/SCSS, JS, and Handlebars knowledge.
+I try to keep it very simple outside of that though.
 
-Regardless of which method you choose, think carefully about your system's name. Your system's package name when submitted to Foundry must be formatted like `alphanumeric-lowercase`, and it must be unique. Check the Foundry systems package list for conflicts before committing to a name!
+Project structure:
+
+- CHANGELOG.md
+- LICENSE.txt
+- README.md
+- SYSTEM.md
+- assets
+- css - Compiled CSS (DON'T EDIT MANUALLY)
+- fonts
+- lang - Translations
+- lib
+- module
+- node_modules
+- package-lock.json
+- package.json
+- packs
+- src
+- system.json
+- template.json
+- template_ideas.json
+- templates
+
+---
+
+## PREVIOUS EXTRA INF0
 
 > **Data Models**
 >
-> If you would like to use DataModel classes instead of the older template.json configuration, you'll need to use the `npm run generate` command described below and choose to enable them when asked. DataModels are currently an optional feature, and are only availabe in the generator CLI due to that.
+> If you would like to use DataModel classes instead of the older template.json configuration, you'll need to use the `npm run generate` command described below and choose to enable them when asked. DataModels are currently an optional feature, and are only available in the generator CLI due to that.
 
 ### Generator
 
 This system includes a generator CLI in `package.json`. To use it, you must have [node.js](https://nodejs.org) installed, and it's recommended that you install node 20 or later.
-
-> **Python Generator**
-> 
-> If you would rather use Python than node, there’s an excellent Python-based generator created by Cussa at https://github.com/Cussa/fvtt-panic-system-initializator. Give it a shot!
 
 Once you have npm installed, you can run the following in your terminal or command prompt:
 

@@ -120,10 +120,6 @@ export function spendCost(actor, cost, dry_run = false) {
 
       updates[`system.currentStance.rolledDice`] = newRolledDice;
     } else {
-      console.warn({
-        maybeDice,
-        amount,
-      });
       success = false;
       // break;
     }
@@ -134,10 +130,15 @@ export function spendCost(actor, cost, dry_run = false) {
       success = false;
       // break;
     }
-  } else if (actor.system.tokens[resource]) {
-    if (actor.system.tokens[resource].value >= amount) {
-      updates[`system.tokens.${resource}.value`] =
-        actor.system.tokens[resource].value - amount;
+  } else if (Number.isInteger(actor.system.tokens[resource])) {
+    // The "Bad" tokens will be added to you instead
+    // of taken away.
+    if (resource == "burning" || resource == "weakness") {
+      updates[`system.tokens.${resource}`] =
+        actor.system.tokens[resource] + amount;
+    } else if (actor.system.tokens[resource] >= amount) {
+      updates[`system.tokens.${resource}`] =
+        actor.system.tokens[resource] - amount;
     } else {
       success = false;
       // break;

@@ -10,6 +10,7 @@ import { PanicItemSheet } from "./sheets/item-sheet.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { PANIC } from "./helpers/config.mjs";
 import { RegisterHandlebarHelpers } from "./RegisterHandlebarHelpers.mjs";
+import { CharacterData } from "./data-models/characterData.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -39,6 +40,18 @@ Hooks.once("init", function () {
   // Define custom Document classes
   CONFIG.Actor.documentClass = PanicActor;
   CONFIG.Item.documentClass = PanicItem;
+
+  Object.assign(CONFIG.Actor.dataModels, {
+    // The keys are the types defined in our template.json
+    character: CharacterData,
+    npc: CharacterData,
+  });
+
+  CONFIG.Actor.trackableAttributes = {
+    character: {
+      bar: ["health"],
+    },
+  };
 
   // Active Effects are never copied to the Actor,
   // but will still apply to the Actor from within the Item

@@ -41,12 +41,12 @@
           {{#each system.tokens as |ability key|}}
             {{!-- TOKENS! --}}
             <div class="token token-{{key}}">
-              <label for="system.tokens.{{key}}.value" class="resource-label" data-roll="d20+@tokens.{{key}}.mod"
+              <label for="system.tokens.{{key}}" class="resource-label" data-roll="d20+@tokens.{{key}}.mod"
                 data-label="{{localize (lookup @root.config.tokens key)}}">{{localize (lookup @root.config.tokens key)}}</label>
               <div class="flex">
                 <button class="removeToken flex-shrink w-14 sm-button" data-token-type="{{key}}">-</button>
-                <input class="tokenInput token-{{key}}" type="text" name="system.tokens.{{key}}.value"
-                  value="{{ability.value}}" data-dtype="Number" />
+                <input class="tokenInput token-{{key}}" type="text" name="system.tokens.{{key}}" value="{{ability}}"
+                  data-dtype="Number" />
                 <button class="addToken flex-shrink w-14 sm-button" data-token-type="{{key}}">+</button>
                 {{!-- <span class="ability-mod rollable" data-roll="d20+@tokens.{{key}}.mod" data-label="{{localize (lookup @root.config.tokens key)}}">{{numberFormat ability.mod decimals=0 sign=true}}</span> --}}
               </div>

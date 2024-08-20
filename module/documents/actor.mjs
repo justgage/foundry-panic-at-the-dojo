@@ -44,6 +44,8 @@ export class PanicActor extends Actor {
   _prepareCharacterData(actorData) {
     if (actorData.type !== "character") return;
 
+    console.log(actorData);
+
     // Make modifications to data here. For example:
     const systemData = actorData.system;
   }
