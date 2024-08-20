@@ -1,6 +1,7 @@
 <div class="flexrow">
   {{#each stances as |stance id|}}
-    <a style="text-align: center; padding: 2px; border-radius: 999px; background-color: orange; color: white;"
+    <a class="smooth-scroll-to"
+      style="text-align: center; padding: 2px; border-radius: 999px; background-color: orange; color: white;"
       href="#stance-header-{{id}}">{{stance.style.name}}
       {{stance.form.name}}</a>
   {{/each}}
@@ -92,7 +93,7 @@
 
             <div class="cost-options flex-row">
               {{#each (parseActionCost action.cost) as |actionCost index|}}
-                <div class="cost-option {{ifClass (canAfford @root.actor actionCost) " afford" "not-afford" }}">
+                <div class="cost-option {{ifRet (canAfford @root.actor actionCost) " afford" "not-afford" }}">
                   <label>
                     {{#if (canAfford @root.actor actionCost)}}
                       <input class="cost-select" {{setCheckedStr index 0}} type="radio"

@@ -188,6 +188,21 @@ export class PanicActorSheet extends ActorSheet {
       this.actor.update({ "system.currentStance.selectedDice": index });
     });
 
+    html.find(".smooth-scroll-to").click((ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const el = $(ev.currentTarget);
+      let destination = $(el.attr("href"));
+      el.parents(".window-content")
+        .first()
+        .animate(
+          {
+            scrollTop: destination.offset().top - 50,
+          },
+          "slow"
+        );
+    });
+
     html.find(".spend-action").click(async (ev) => {
       const { actionIndex, cost } = ev.target.dataset;
       console.log({ cost, actionIndex });
@@ -205,7 +220,10 @@ export class PanicActorSheet extends ActorSheet {
         const actionHtml = $(ev.target).parents(".action-item")[0].outerHTML;
         let chatContent = `
         <div class="panic-system">
+        <div class="flex-row items-center">
+        <img class="profile-img" src="${this.actor.img}" data-edit="img" title="${this.actor.name}" height="40" width="40" />
         <h3>${this.actor.name} spends: <b>${applicableCosts[0].amount} ${applicableCosts[0].resource}</b> to preform:</h3>
+        </div>
         <section>
         ${actionHtml}
         </section>
@@ -228,7 +246,7 @@ export class PanicActorSheet extends ActorSheet {
       // Roll all action dice at once
       const index = ev.currentTarget.dataset.stanceId;
 
-      this.actor.update({
+      await this.actor.update({
         "system.currentStance": {
           selectedDice: -1,
           rolledDice: [],
@@ -237,8 +255,9 @@ export class PanicActorSheet extends ActorSheet {
       });
 
       const diceToRoll = this.ensureArray(
-        this.actor.system.currentStance.actionDice
+        this.currentStance(index).form.system.actionDice
       ).join(" + ");
+
       const roll = await new Roll(diceToRoll).roll({ async: true });
 
       // Check if Dice So Nice is active and trigger the animation
