@@ -141,10 +141,11 @@
   }
 
   &.stance-selected {
+    background-color: #fffea9;
+
     & .stance-header {
       background-color: rgb(255, 215, 34);
     }
-    background-color: #fffea9;
   }
 }
 
@@ -155,10 +156,10 @@ a.stance-tab {
   border-top-left-radius: 999px;
   color: white;
   background-color: gray;
+  text-decoration: none;
   &.stance-button-selected {
     background-color: orange;
   }
-  text-decoration: none;
 }
 
 .stance-title {
