@@ -1,6 +1,5 @@
 <div class="">
     <ul class="actions-list flexcol">
-        {{log "action.hbs -> actions" uniqueActions}}
         {{#each uniqueActions as |action|}}
             {{#if ../editable}}
 
@@ -21,7 +20,6 @@
                         <label>Description:</label>
                         <div class="flexcol action-description"
                             style="padding: 1rem; background: rgba(106, 106, 106, 0.186); min-height: 10rem">
-                            {{log "action.editor" action.editor}}
                             {{editor action.editor
                             target=(concat 'system.uniqueActions.' @index '.description')
                             engine='prosemirror'

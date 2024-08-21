@@ -109,20 +109,24 @@
 
 .stance {
   list-style-type: none;
-  padding: 0.25rem;
   border-radius: 4px;
   margin-bottom: 0.5rem;
   background-color: #fffff6cd;
-  opacity: 0.7;
+  // opacity: 0.7;
+
+  display: flex;
 
   & button {
     border-style: solid;
   }
 
-  & > h2 {
-    margin-left: -0.25rem;
-    margin-right: -0.25rem;
-    background-color: rgb(255, 215, 34);
+  & .stance-abilities {
+    padding: 0.5rem;
+  }
+
+  & .stance-header {
+    flex-grow: 1;
+    background-color: rgb(205, 205, 205);
     position: sticky;
     top: 0;
     bottom: 0;
@@ -136,10 +140,25 @@
     border-bottom: none;
   }
 
-  &:has(.stance-select:checked) {
-    opacity: 1;
+  &.stance-selected {
+    & .stance-header {
+      background-color: rgb(255, 215, 34);
+    }
     background-color: #fffea9;
   }
+}
+
+a.stance-tab {
+  text-align: center;
+  padding: 2px;
+  border-top-right-radius: 999px;
+  border-top-left-radius: 999px;
+  color: white;
+  background-color: gray;
+  &.stance-button-selected {
+    background-color: orange;
+  }
+  text-decoration: none;
 }
 
 .stance-title {

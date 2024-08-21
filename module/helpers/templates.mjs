@@ -7,6 +7,7 @@ export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
     // Actor partials.
     "systems/panic-system/templates/actor/parts/actor-items.hbs",
+    "systems/panic-system/templates/actor/parts/actions.hbs",
     "systems/panic-system/templates/actor/parts/actor-effects.hbs",
     // Item partials
     "systems/panic-system/templates/item/parts/item-effects.hbs",

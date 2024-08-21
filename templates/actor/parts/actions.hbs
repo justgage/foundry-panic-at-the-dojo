@@ -1,0 +1,34 @@
+{{#each this.actions as |action action-index|}}
+    <div class="action-item flexcol" style="margin-top: 1rem; background: rgb(0, 224, 0);">
+        <div class="form-group">
+            <h2 class="flex-row" style="background-color: green; margin-bottom: 0; color: white; border-bottom: 0;">
+                {{!-- Start of cost --}}
+                <div class="cost-options flex-row">
+                    {{#each (parseActionCost action.cost) as |actionCost index|}}
+                        <div class="cost-option {{ifClass (canAfford @root.actor actionCost) 'afford' 'not-afford' }}">
+                            <label>
+                                {{#if (canAfford @root.actor actionCost)}}
+                                    <input class="cost-select" {{setCheckedStr index 0}} type="radio"
+                                        name="cost-{{id}}-{{action-index}}" id="cost-{{id}}-{{action-index}}-{{index}}"
+                                        value="{{this.resource}}|{{this.amount}}">
+                                {{/if}}
+                                {{#if (eq this.resource "dice")}}
+                                    {{this.amount}}+
+                                {{else}}
+                                    {{this.amount}} {{capitalize this.resource}}
+                                {{/if}}
+                            </label>
+                        </div>
+                    {{/each}}
+                </div>
+                {{!-- end cost --}}
+                : <span class="flex-grow">{{action.title}}</span>
+                <button class="spend-action" data-cost="{{action.cost}}" data-action-index="{{action-index}}"
+                    style=" width: auto; color: white;">Spend</button>
+            </h2>
+        </div>
+        <div style="padding: 0.5em;">
+            {{{action.description}}}
+        </div>
+    </div>
+{{/each}}

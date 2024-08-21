@@ -13,6 +13,7 @@ export function RegisterHandlebarHelpers() {
     gt: (v1, v2) => v1 > v2,
     lte: (v1, v2) => v1 <= v2,
     gte: (v1, v2) => v1 >= v2,
+    nonEmpty: (v1) => v1.length > 0,
     and() {
       return Array.prototype.every.call(arguments, Boolean);
     },
@@ -68,6 +69,14 @@ export function RegisterHandlebarHelpers() {
     setChecked: function (value, currentValue) {
       if (value == currentValue) {
         return "checked";
+      } else {
+        return "";
+      }
+    },
+
+    setOpen: function (value) {
+      if (value) {
+        return "open";
       } else {
         return "";
       }

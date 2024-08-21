@@ -616,19 +616,20 @@
 }
 .panic-system .stance {
   list-style-type: none;
-  padding: 0.25rem;
   border-radius: 4px;
   margin-bottom: 0.5rem;
   background-color: rgba(255, 255, 246, 0.8039215686);
-  opacity: 0.7;
+  display: flex;
 }
 .panic-system .stance button {
   border-style: solid;
 }
-.panic-system .stance > h2 {
-  margin-left: -0.25rem;
-  margin-right: -0.25rem;
-  background-color: rgb(255, 215, 34);
+.panic-system .stance .stance-abilities {
+  padding: 0.5rem;
+}
+.panic-system .stance .stance-header {
+  flex-grow: 1;
+  background-color: rgb(205, 205, 205);
   position: sticky;
   top: 0;
   bottom: 0;
@@ -640,9 +641,23 @@
   border-bottom-right-radius: 20px;
   border-bottom: none;
 }
-.panic-system .stance:has(.stance-select:checked) {
-  opacity: 1;
+.panic-system .stance.stance-selected {
   background-color: #fffea9;
+}
+.panic-system .stance.stance-selected .stance-header {
+  background-color: rgb(255, 215, 34);
+}
+.panic-system a.stance-tab {
+  text-align: center;
+  padding: 2px;
+  border-top-right-radius: 999px;
+  border-top-left-radius: 999px;
+  color: white;
+  background-color: gray;
+  text-decoration: none;
+}
+.panic-system a.stance-tab.stance-button-selected {
+  background-color: orange;
 }
 .panic-system .stance-title {
   display: flex;

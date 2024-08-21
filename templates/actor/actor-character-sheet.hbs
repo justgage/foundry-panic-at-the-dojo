@@ -57,10 +57,9 @@
       </div>
       {{!-- Display action dice character currently has selected --}}
       <div class="action-dice-tray">
-        {{#if (not (eq system.currentStance.rolledDice [])) }}
+        {{#if (nonEmpty system.currentStance.rolledDice)}}
           Action Dice:
           {{#each system.currentStance.rolledDice as |dice index|}}
-            {{log dice}}
             <button class="dice" {{setDisabled dice.used }}>
               {{#if (not dice.used)}}
                 <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
@@ -70,7 +69,7 @@
             </button>
           {{/each}}
         {{else}}
-          Please select a stance
+          Please select a stance by rolling the dice
         {{/if}}
       </div>
   </header>
