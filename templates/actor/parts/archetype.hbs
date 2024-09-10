@@ -1,13 +1,12 @@
-Archie?
-
-{{#each archetypes as |archetype|}}
-    <div class="archetype-header">
-        {{#each system.abilities as |ability index|}}
-            {{#if (eq ability.heroType @root.system.heroType)}}
-                <div class='ability'>
-                    {{#if @root.editable}}
-                        (link to change archetype here)
-                    {{else}}
+{{#if @root.editable}}
+    <ul>
+        {{#each archetypes as |archetype|}}
+            <li class="item flexrow archetype-header" data-item-id="{{archetype._id}}">
+                <div class=' item-name'>
+                    Archetype: {{archetype.name}}
+                </div>
+                {{#each this.system.abilities as |ability index|}}
+                    <div class='ability'>
                         {{#if ability.title}}
                             <div>{{ability.title}}</div>
                         {{else}}
@@ -15,11 +14,38 @@ Archie?
                         {{/if}}
 
                         <div>{{{ability.description}}}</div>
-                    {{/if}}
+                    </div>
+                {{/each}}
+                <div class='item-controls'>
+                    <a class='item-control item-edit' title='{{localize "DOCUMENT.Edit" type="archetype"}}'>
+                        <i class='fas fa-edit'></i>
+                    </a>
+                    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type="archetype"}}'>
+                        <i class='fas fa-trash'></i>
+                    </a>
                 </div>
-            {{else}}
-                {{json ability.heroType}} != {{log @root}}
-            {{/if}}
+            </li>
         {{/each}}
-    </div>
-{{/each}}
+    </ul>
+
+{{else}}
+    {{#each archetypes as |archetype|}}
+        <div class="archetype-header">
+            {{#each system.abilities as |ability index|}}
+                {{#if (eq ability.heroType @root.actor.system.heroType)}}
+                    <div class='ability'>
+                        {{#unless @root.editable}}
+                            {{#if ability.title}}
+                                <div>{{ability.title}}</div>
+                            {{else}}
+                                <div>{{ability.heroType}} {{archetype.name}}</div>
+                            {{/if}}
+
+                            <div>{{{ability.description}}}</div>
+                        {{/unless}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/each}}
+{{/if}}
