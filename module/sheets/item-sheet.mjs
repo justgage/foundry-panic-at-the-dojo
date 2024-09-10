@@ -166,23 +166,26 @@ export class PanicItemSheet extends ItemSheet {
     if (itemData.type == "archetype") {
       let abilities = foundry.utils.deepClone(itemData.system.abilities);
 
-      //
       context.abilities = await Promise.all(
-        abilities.map(async (ability) => {
-          const ability = foundry.utils.deepClone(ability);
+        abilities.map(async (originalAbility) => {
+          try {
+            const ability = foundry.utils.deepClone(originalAbility);
 
-          ability.description = await TextEditor.enrichHTML(ability.description, {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Necessary in v11, can be removed in v12
-            async: true,
-            // Data to fill in for inline rolls
-            rollData: this.item.getRollData(),
-            // Relative UUID resolution
-            relativeTo: this.item,
-          });
+            ability.description = await TextEditor.enrichHTML(ability.description, {
+              // Whether to show secret blocks in the finished html
+              secrets: this.document.isOwner,
+              // Necessary in v11, can be removed in v12
+              async: true,
+              // Data to fill in for inline rolls
+              rollData: this.item.getRollData(),
+              // Relative UUID resolution
+              relativeTo: this.item,
+            });
 
-          return ability;
+            return ability;
+          } catch (e) {
+            console.error(e);
+          }
         }),
       );
     }
