@@ -9,6 +9,15 @@
                     {{system.name}} Archetype
                 {{/if}}
             </h1>
+            <div class='archetype-slug'>
+                {{#if editable}}
+                    <label>Style ID:</label>
+                    ID used for styles: <input type="text" name="system.archetypeSlug"
+                        value="{{system.archetypeSlug}}" />
+                {{else}}
+                    ID for styles: <code>{{system.archetypeSlug}}</code>
+                {{/if}}
+            </div>
         </div>
 
         <div class="">
@@ -39,7 +48,7 @@
                         </select>
 
                         <input type="text" name="system.abilities.{{index}}.title" value="{{ability.title}}"
-                            placeholder="Ability Title {{index}}" />
+                            placeholder="{{ability.heroType}} {{../system.name}}" />
 
                         {{!-- <input type="text" name="system.abilities.{{index}}.description" value="{{ability.description}}"
                             placeholder="Ability description {{index}}" /> --}}
@@ -57,17 +66,11 @@
                 </div>
             {{/each}}
             {{#if editable}}
-                <button type="button" class="add-ability">Add Ability</button>
+                <button type="button" class="add-ability">Add Ability</button> (note: by default you have one for each
+                hero type)
             {{/if}}
         </div>
 
-        <div class='archetype-slug'>
-            <label>Archetype Slug:</label>
-            {{#if editable}}
-                <input type="text" name="system.archetypeSlug" value="{{system.archetypeSlug}}" />
-            {{else}}
-                {{system.archetypeSlug}}
-            {{/if}}
-        </div>
+
     </section>
 </form>

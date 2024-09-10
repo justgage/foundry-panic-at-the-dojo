@@ -8,31 +8,15 @@ Archie?
         {{#each system.abilities as |ability index|}}
             <div class='ability'>
                 {{#if @root.editable}}
-                    <select name="system.abilities.{{@index}}.heroType">
-                        <option value="Focused" {{#if (eq ability.heroType "Focused" )}}selected{{/if}}>Focused
-                        </option>
-                        <option value="Fused" {{#if (eq ability.heroType "Fused" )}}selected{{/if}}>Fused</option>
-                        <option value="Frantic" {{#if (eq ability.heroType "Frantic" )}}selected{{/if}}>Frantic
-                        </option>
-                    </select>
-
-                    <input type="text" name="system.abilities.{{index}}.title" value="{{ability.title}}"
-                        placeholder="Ability Title {{index}}" />
-
-                    {{!-- <input type="text" name="system.abilities.{{index}}.description" value="{{ability.description}}"
-                            placeholder="Ability description {{index}}" /> --}}
-
-                    <div class="archetype-editor-box">
-                        {{editor action.description
-                                target=(concat 'system.abilities.{{index}}.' @index '.description')
-                        engine='prosemirror'
-                        button=true
-                        editable=@root.editable}}
-                    </div>
+                    (link to change archetype here)
                 {{else}}
-                    <div>{{ability.title}}</div>
+                    {{#if ability.title}}
+                        <div>{{ability.title}}</div>
+                    {{else}}
+                        <div>{{ability.heroType}} {{archetype.name}}</div>
+                    {{/if}}
+
                     <div>{{{ability.description}}}</div>
-                    <div>{{{ability.heroType}}}</div>
                 {{/if}}
             </div>
         {{/each}}
