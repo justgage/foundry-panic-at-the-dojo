@@ -1,5 +1,4 @@
-const { SchemaField, NumberField, StringField, ArrayField, BooleanField } =
-  foundry.data.fields;
+const { SchemaField, NumberField, StringField, ArrayField, BooleanField } = foundry.data.fields;
 
 export class CharacterData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
@@ -20,7 +19,7 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
             used: new BooleanField({ required: true, default: false }),
             face: new NumberField({ required: true, default: -1 }),
             result: new NumberField({ required: true, default: -1 }),
-          })
+          }),
         ),
         selectedDice: new NumberField({ integer: true, initial: -1 }),
       }),

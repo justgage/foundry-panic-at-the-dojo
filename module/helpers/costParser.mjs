@@ -22,7 +22,7 @@ function parseActionCost(costString) {
 
       // Handling multi-word tokens (e.g., '3 Speed Tokens')
       const multiWordMatch = section.match(
-        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other) tokens/i
+        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other) tokens/i,
       );
       if (multiWordMatch) {
         const amount = parseInt(multiWordMatch[1], 10);
@@ -33,7 +33,7 @@ function parseActionCost(costString) {
 
       // Handling specific tokens (e.g., '-1 Burn', '-2 HP')
       const tokenMatch = section.match(
-        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other)/i
+        /(\d\d*).*(speed|iron|power|weakness|burning|hp|basic|other)/i,
       );
       if (tokenMatch) {
         const amount = parseInt(tokenMatch[1], 10);
@@ -43,9 +43,7 @@ function parseActionCost(costString) {
       }
 
       // Handling phrases like 'Destroy 1 Copy' or 'Gain 1 Burning Token'
-      const actionMatch = section.match(
-        /(destroy|gain)\s*(\d\d*)\s*(copy|burning token)/i
-      );
+      const actionMatch = section.match(/(destroy|gain)\s*(\d\d*)\s*(copy|burning token)/i);
       if (actionMatch) {
         const amount = parseInt(actionMatch[2], 10);
         const resource = actionMatch[3] ? actionMatch[3].toLowerCase() : null;
@@ -104,9 +102,7 @@ export function spendCost(actor, cost, dry_run = false) {
     let diceIndex = actor.system.currentStance.selectedDice;
 
     if (diceIndex == -1) {
-      diceIndex = actionDice.findIndex(
-        (die) => !die.used && die.result >= amount
-      );
+      diceIndex = actionDice.findIndex((die) => !die.used && die.result >= amount);
     }
 
     const maybeDice = actionDice[diceIndex];
@@ -114,9 +110,7 @@ export function spendCost(actor, cost, dry_run = false) {
     if (maybeDice && !maybeDice.used && maybeDice.result >= amount) {
       const newRolledDice = foundry.utils
         .deepClone(actor.system.currentStance.rolledDice)
-        .map((dice, index) =>
-          index == diceIndex ? { ...dice, used: true } : dice
-        );
+        .map((dice, index) => (index == diceIndex ? { ...dice, used: true } : dice));
 
       updates[`system.currentStance.rolledDice`] = newRolledDice;
     } else {
@@ -134,11 +128,9 @@ export function spendCost(actor, cost, dry_run = false) {
     // The "Bad" tokens will be added to you instead
     // of taken away.
     if (resource == "burning" || resource == "weakness") {
-      updates[`system.tokens.${resource}`] =
-        actor.system.tokens[resource] + amount;
+      updates[`system.tokens.${resource}`] = actor.system.tokens[resource] + amount;
     } else if (actor.system.tokens[resource] >= amount) {
-      updates[`system.tokens.${resource}`] =
-        actor.system.tokens[resource] - amount;
+      updates[`system.tokens.${resource}`] = actor.system.tokens[resource] - amount;
     } else {
       success = false;
       // break;

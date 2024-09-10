@@ -12,7 +12,11 @@
   font-family: "Dicier";
   font-variant-ligatures: discretionary-ligatures;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "liga" 1, "kern" 1, "calt" 1, "dlig" 1;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1,
+    "calt" 1,
+    "dlig" 1;
   text-transform: uppercase;
 }
 
@@ -37,7 +41,8 @@
   font-family: "Caveat Brush", sans-serif;
 }
 
-.rollable:hover, .rollable:focus {
+.rollable:hover,
+.rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -46,7 +51,7 @@
 .grid,
 .grid-2col {
   display: grid;
-  grid-column: span 2/span 2;
+  grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
@@ -54,52 +59,52 @@
 }
 
 .grid-3col {
-  grid-column: span 3/span 3;
+  grid-column: span 3 / span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-4col {
-  grid-column: span 4/span 4;
+  grid-column: span 4 / span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-5col {
-  grid-column: span 5/span 5;
+  grid-column: span 5 / span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-6col {
-  grid-column: span 6/span 6;
+  grid-column: span 6 / span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .grid-7col {
-  grid-column: span 7/span 7;
+  grid-column: span 7 / span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-8col {
-  grid-column: span 8/span 8;
+  grid-column: span 8 / span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .grid-9col {
-  grid-column: span 9/span 9;
+  grid-column: span 9 / span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .grid-10col {
-  grid-column: span 10/span 10;
+  grid-column: span 10 / span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .grid-11col {
-  grid-column: span 11/span 11;
+  grid-column: span 11 / span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
 .grid-12col {
-  grid-column: span 12/span 12;
+  grid-column: span 12 / span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -688,7 +693,7 @@
   box-shadow: 0 0 20px var(--color-shadow-dark);
   z-index: -1;
 }
-.panic-system .action-dice-tray input[type=radio] {
+.panic-system .action-dice-tray input[type="radio"] {
   display: none;
 }
 .panic-system .action-dice-tray button:has(input[checked]) {
@@ -714,10 +719,10 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
-.panic-system .cost-options label input[type=radio] {
+.panic-system .cost-options label input[type="radio"] {
   display: none;
 }
-.panic-system .cost-options label:has(input[type=radio]:checked) {
+.panic-system .cost-options label:has(input[type="radio"]:checked) {
   background-color: #ff8800;
   box-shadow: orange 0 0 2px 3px;
 }

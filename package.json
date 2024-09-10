@@ -4,7 +4,8 @@
   "description": "CSS compiler for the Panic system",
   "scripts": {
     "build": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --no-source-map",
-    "watch": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --source-map --watch"
+    "watch": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --source-map --watch",
+    "format": "prettier --write './**/*.{mjs,ts,json,html,css}'"
   },
   "browserslist": [
     "last 3 versions"

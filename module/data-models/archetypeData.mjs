@@ -1,5 +1,4 @@
-const { SchemaField, NumberField, StringField, ArrayField, BooleanField } =
-  foundry.data.fields;
+const { SchemaField, NumberField, StringField, ArrayField, BooleanField } = foundry.data.fields;
 
 export class ArchetypeData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
@@ -18,7 +17,7 @@ export class ArchetypeData extends foundry.abstract.TypeDataModel {
           title: new StringField(),
           description: new StringField(),
           heroType: new StringField(),
-        })
+        }),
       ),
 
       archetypeSlug: new StringField({

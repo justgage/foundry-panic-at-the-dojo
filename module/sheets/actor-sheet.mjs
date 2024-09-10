@@ -1,12 +1,5 @@
-import {
-  canAfford,
-  parseActionCost,
-  spendCost,
-} from "../helpers/costParser.mjs";
-import {
-  onManageActiveEffect,
-  prepareActiveEffectCategories,
-} from "../helpers/effects.mjs";
+import { canAfford, parseActionCost, spendCost } from "../helpers/costParser.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -74,25 +67,22 @@ export class PanicActorSheet extends ActorSheet {
 
     // Enrich biography info for display
     // Enrichment turns text like `[[/r 1d20]]` into buttons
-    context.enrichedBiography = await TextEditor.enrichHTML(
-      this.actor.system.biography,
-      {
-        // Whether to show secret blocks in the finished html
-        secrets: this.document.isOwner,
-        // Necessary in v11, can be removed in v12
-        async: true,
-        // Data to fill in for inline rolls
-        rollData: this.actor.getRollData(),
-        // Relative UUID resolution
-        relativeTo: this.actor,
-      }
-    );
+    context.enrichedBiography = await TextEditor.enrichHTML(this.actor.system.biography, {
+      // Whether to show secret blocks in the finished html
+      secrets: this.document.isOwner,
+      // Necessary in v11, can be removed in v12
+      async: true,
+      // Data to fill in for inline rolls
+      rollData: this.actor.getRollData(),
+      // Relative UUID resolution
+      relativeTo: this.actor,
+    });
 
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(
       // A generator that returns all effects stored on the actor
       // as well as any items
-      this.actor.allApplicableEffects()
+      this.actor.allApplicableEffects(),
     );
 
     return context;
@@ -155,11 +145,7 @@ export class PanicActorSheet extends ActorSheet {
         styles.push(i);
       }
     }
-    for (
-      let index = 0;
-      index < Math.max(forms.length, styles.length);
-      index++
-    ) {
+    for (let index = 0; index < Math.max(forms.length, styles.length); index++) {
       const form = forms[index];
       const style = styles[index];
 
@@ -199,7 +185,7 @@ export class PanicActorSheet extends ActorSheet {
           {
             scrollTop: destination.offset().top - 50,
           },
-          "slow"
+          "slow",
         );
     });
 
@@ -208,9 +194,7 @@ export class PanicActorSheet extends ActorSheet {
       console.log({ cost, actionIndex });
       const costs = parseActionCost(cost);
 
-      const applicableCosts = costs.filter((cost) =>
-        canAfford(this.actor, cost)
-      );
+      const applicableCosts = costs.filter((cost) => canAfford(this.actor, cost));
 
       console.log({ applicableCosts });
 
@@ -236,9 +220,7 @@ export class PanicActorSheet extends ActorSheet {
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
         });
       } else {
-        ui.notifications.error(
-          `Sorry, you can't pay the cost of that action. Cost is: ${cost}`
-        );
+        ui.notifications.error(`Sorry, you can't pay the cost of that action. Cost is: ${cost}`);
       }
     });
 
@@ -254,9 +236,9 @@ export class PanicActorSheet extends ActorSheet {
         },
       });
 
-      const diceToRoll = this.ensureArray(
-        this.currentStance(index).form.system.actionDice
-      ).join(" + ");
+      const diceToRoll = this.ensureArray(this.currentStance(index).form.system.actionDice).join(
+        " + ",
+      );
 
       const roll = await new Roll(diceToRoll).roll({ async: true });
 
@@ -380,9 +362,7 @@ export class PanicActorSheet extends ActorSheet {
   }
 
   currentStance() {
-    return this.makeStances(this.actor.items).stances[
-      this.actor.system.currentStance.index
-    ];
+    return this.makeStances(this.actor.items).stances[this.actor.system.currentStance.index];
   }
 
   /**

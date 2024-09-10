@@ -1,7 +1,4 @@
-import {
-  onManageActiveEffect,
-  prepareActiveEffectCategories,
-} from "../helpers/effects.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -47,33 +44,27 @@ export class PanicItemSheet extends ItemSheet {
 
     // Enrich description info for display
     // Enrichment turns text like `[[/r 1d20]]` into buttons
-    context.enrichedDescription = await TextEditor.enrichHTML(
-      this.item.system.description,
-      {
-        // Whether to show secret blocks in the finished html
-        secrets: this.document.isOwner,
-        // Necessary in v11, can be removed in v12
-        async: true,
-        // Data to fill in for inline rolls
-        rollData: this.item.getRollData(),
-        // Relative UUID resolution
-        relativeTo: this.item,
-      }
-    );
+    context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {
+      // Whether to show secret blocks in the finished html
+      secrets: this.document.isOwner,
+      // Necessary in v11, can be removed in v12
+      async: true,
+      // Data to fill in for inline rolls
+      rollData: this.item.getRollData(),
+      // Relative UUID resolution
+      relativeTo: this.item,
+    });
 
-    context.enrichedCommentary = await TextEditor.enrichHTML(
-      this.item.system.commentary,
-      {
-        // Whether to show secret blocks in the finished html
-        secrets: this.document.isOwner,
-        // Necessary in v11, can be removed in v12
-        async: true,
-        // Data to fill in for inline rolls
-        rollData: this.item.getRollData(),
-        // Relative UUID resolution
-        relativeTo: this.item,
-      }
-    );
+    context.enrichedCommentary = await TextEditor.enrichHTML(this.item.system.commentary, {
+      // Whether to show secret blocks in the finished html
+      secrets: this.document.isOwner,
+      // Necessary in v11, can be removed in v12
+      async: true,
+      // Data to fill in for inline rolls
+      rollData: this.item.getRollData(),
+      // Relative UUID resolution
+      relativeTo: this.item,
+    });
 
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
@@ -98,7 +89,7 @@ export class PanicItemSheet extends ItemSheet {
           rollData: this.item.getRollData(),
           // Relative UUID resolution
           relativeTo: this.item,
-        }
+        },
       );
 
       context.enrichedSkillDescription = await TextEditor.enrichHTML(
@@ -112,11 +103,10 @@ export class PanicItemSheet extends ItemSheet {
           rollData: this.item.getRollData(),
           // Relative UUID resolution
           relativeTo: this.item,
-        }
+        },
       );
 
-      let uniqueActions =
-        foundry.utils.deepClone(itemData.system.uniqueActions) || [];
+      let uniqueActions = foundry.utils.deepClone(itemData.system.uniqueActions) || [];
 
       if (!Array.isArray(uniqueActions)) {
         console.log("fixing the array: ", uniqueActions);
@@ -139,20 +129,14 @@ export class PanicItemSheet extends ItemSheet {
           });
 
           return action;
-        })
+        }),
       );
     }
 
     // Style ----------------
     if (itemData.type == "style") {
-      let uniqueActions = foundry.utils.deepClone(
-        itemData.system.uniqueActions
-      );
-      console.log(
-        "itemData.system.uniqueActions->>",
-        uniqueActions,
-        itemData.system.uniqueActions
-      );
+      let uniqueActions = foundry.utils.deepClone(itemData.system.uniqueActions);
+      console.log("itemData.system.uniqueActions->>", uniqueActions, itemData.system.uniqueActions);
 
       if (!Array.isArray(uniqueActions)) {
         console.log("fixing the array: ", uniqueActions);
@@ -175,7 +159,7 @@ export class PanicItemSheet extends ItemSheet {
           });
 
           return action;
-        })
+        }),
       );
     }
 
@@ -187,22 +171,19 @@ export class PanicItemSheet extends ItemSheet {
         abilities.map(async (ability) => {
           const ability = foundry.utils.deepClone(ability);
 
-          ability.description = await TextEditor.enrichHTML(
-            ability.description,
-            {
-              // Whether to show secret blocks in the finished html
-              secrets: this.document.isOwner,
-              // Necessary in v11, can be removed in v12
-              async: true,
-              // Data to fill in for inline rolls
-              rollData: this.item.getRollData(),
-              // Relative UUID resolution
-              relativeTo: this.item,
-            }
-          );
+          ability.description = await TextEditor.enrichHTML(ability.description, {
+            // Whether to show secret blocks in the finished html
+            secrets: this.document.isOwner,
+            // Necessary in v11, can be removed in v12
+            async: true,
+            // Data to fill in for inline rolls
+            rollData: this.item.getRollData(),
+            // Relative UUID resolution
+            relativeTo: this.item,
+          });
 
           return ability;
-        })
+        }),
       );
     }
 
@@ -231,9 +212,7 @@ export class PanicItemSheet extends ItemSheet {
     // Roll handlers, click handlers, etc. would go here.
 
     // Active Effect management
-    html.on("click", ".effect-control", (ev) =>
-      onManageActiveEffect(ev, this.item)
-    );
+    html.on("click", ".effect-control", (ev) => onManageActiveEffect(ev, this.item));
 
     // ARCHETYPE -=--=-=-=-=-=--=-=-=-=-=-
 
@@ -271,7 +250,7 @@ export class PanicItemSheet extends ItemSheet {
         console.log(
           "this.item.system.actionDice",
 
-          this.item.system.actionDice
+          this.item.system.actionDice,
         );
       });
     });
@@ -329,8 +308,7 @@ export class PanicItemSheet extends ItemSheet {
       console.log("ADD ACTION!");
       ev.preventDefault();
 
-      let uniqueActions =
-        foundry.utils.deepClone(this.item.system.uniqueActions) || [];
+      let uniqueActions = foundry.utils.deepClone(this.item.system.uniqueActions) || [];
       if (!Array.isArray(uniqueActions)) {
         uniqueActions = Object.values(uniqueActions);
       }
@@ -347,9 +325,7 @@ export class PanicItemSheet extends ItemSheet {
       const li = $(ev.currentTarget).closest("li");
       const index = li.index();
 
-      let uniqueActions = foundry.utils.deepClone(
-        this.item.system.uniqueActions
-      );
+      let uniqueActions = foundry.utils.deepClone(this.item.system.uniqueActions);
       if (!Array.isArray(uniqueActions)) {
         uniqueActions = Object.values(uniqueActions);
       }
