@@ -48,20 +48,34 @@
                         </select>
 
                         <input type="text" name="system.abilities.{{index}}.title" value="{{ability.title}}"
-                            placeholder="{{ability.heroType}} {{../system.name}}" />
-
-                        {{!-- <input type="text" name="system.abilities.{{index}}.description" value="{{ability.description}}"
-                            placeholder="Ability description {{index}}" /> --}}
-
+                            placeholder="{{ability.heroType}} {{../system.name}}">
                         <div class="archetype-editor-box">
+                            <textarea type="text" name="system.abilities.{{index}}.description"
+                                value="{{ability.description}}"
+                                placeholder="Ability description {{index}}">{{ability.description}}</textarea>
+                        </div>
+
+                        {{!-- <div class="archetype-editor-box">
                             {{editor ability.description
                                 target=(concat 'system.abilities.' index '.description')
                                 engine="tinymce"
                                 button=true
                                 editable=@root.editable}}
-                        </div>
+                        </div> --}}
                     {{else}}
-                        <p>{{this}}</p>
+                        <div class="archetype-header">
+                            <div class='ability'>
+                                <h3>
+                                    {{#if ability.title}}
+                                        {{ability.title}}
+                                    {{else}}
+                                        {{ability.heroType}} {{@root.system.name}}
+                                    {{/if}}
+                                </h3>
+
+                                <div class="ability-description">{{{ability.description}}}</div>
+                            </div>
+                        </div>
                     {{/if}}
                 </div>
             {{/each}}

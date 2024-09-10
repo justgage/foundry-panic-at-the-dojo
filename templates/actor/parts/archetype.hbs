@@ -2,9 +2,9 @@
     <ul>
         {{#each archetypes as |archetype|}}
             <li class="item flexrow archetype-header" data-item-id="{{archetype._id}}">
-                <div class=' item-name'>
+                <h2 class=' item-name'>
                     Archetype: {{archetype.name}}
-                </div>
+                </h2>
                 {{#each this.system.abilities as |ability index|}}
                     <div class='ability'>
                         {{#if ability.title}}
@@ -35,13 +35,15 @@
                 {{#if (eq ability.heroType @root.actor.system.heroType)}}
                     <div class='ability'>
                         {{#unless @root.editable}}
-                            {{#if ability.title}}
-                                <div>{{ability.title}}</div>
-                            {{else}}
-                                <div>{{ability.heroType}} {{archetype.name}}</div>
-                            {{/if}}
+                            <h3>
+                                {{#if ability.title}}
+                                    {{ability.title}}
+                                {{else}}
+                                    {{ability.heroType}} {{archetype.name}}
+                                {{/if}}
+                            </h3>
 
-                            <div>{{{ability.description}}}</div>
+                            <div class="ability-description">{{{ability.description}}}</div>
                         {{/unless}}
                     </div>
                 {{/if}}

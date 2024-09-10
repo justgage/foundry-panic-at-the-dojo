@@ -270,6 +270,7 @@
   font-family: "Caveat Brush", sans-serif;
 }
 .panic-system .sheet-header {
+  position: relative;
   flex: 0 auto;
   overflow: hidden;
   display: flex;
@@ -735,7 +736,19 @@
   box-shadow: orange 0 0 2px 3px;
 }
 .panic-system .archetype-header {
-  background: rgb(255, 225, 255);
+  background: rgb(255, 146, 255);
+  background: linear-gradient(300deg, rgb(199, 180, 255) 0%, rgb(255, 146, 255) 100%);
+  margin-bottom: 1rem;
+}
+.panic-system .archetype-header h3 {
+  background-color: #724073;
+  border-bottom-right-radius: 20px;
+  color: white;
+  padding: 0.2em;
+}
+.panic-system .archetype-header .ability-description {
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 0.2em;
 }
 
 /*# sourceMappingURL=panic-system.css.map */
