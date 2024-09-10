@@ -30,11 +30,6 @@
             {{#each system.abilities as |ability index|}}
                 <div class='ability'>
                     {{#if ../editable}}
-                        <input type="text" name="system.abilities.{{index}}.title" value="{{ability.title}}"
-                            placeholder="Ability Title {{index}}" />
-                        <input type="text" name="system.abilities.{{index}}.description" value="{{ability.description}}"
-                            placeholder="Ability description {{index}}" />
-
                         <select name="system.abilities.{{@index}}.heroType">
                             <option value="Focused" {{#if (eq ability.heroType "Focused" )}}selected{{/if}}>Focused
                             </option>
@@ -42,6 +37,20 @@
                             <option value="Frantic" {{#if (eq ability.heroType "Frantic" )}}selected{{/if}}>Frantic
                             </option>
                         </select>
+
+                        <input type="text" name="system.abilities.{{index}}.title" value="{{ability.title}}"
+                            placeholder="Ability Title {{index}}" />
+
+                        {{!-- <input type="text" name="system.abilities.{{index}}.description" value="{{ability.description}}"
+                            placeholder="Ability description {{index}}" /> --}}
+
+                        <div class="archetype-editor-box">
+                            {{editor action.description
+                                target=(concat 'system.abilities.{{index}}.' @index '.description')
+                            engine='prosemirror'
+                            button=true
+                            editable=@root.editable}}
+                        </div>
                     {{else}}
                         <p>{{this}}</p>
                     {{/if}}

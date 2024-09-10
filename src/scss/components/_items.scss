@@ -218,3 +218,20 @@ ul.actions-list {
   border-left: rgb(0, 102, 255) solid 0.5rem;
   border-right: rgb(0, 102, 255) solid 0.5rem;
 }
+
+.window-content:has(.archetype-sheet) {
+  position: relative;
+  background-color: rgb(255, 227, 253) !important;
+  background-image: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  border-left: rgb(255, 227, 253) solid 0.5rem;
+  border-right: rgb(255, 227, 253) solid 0.5rem;
+}
+
+.archetype-editor-box {
+  & > div {
+    min-height: 10em;
+  }
+}
