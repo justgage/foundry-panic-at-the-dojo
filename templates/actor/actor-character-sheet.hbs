@@ -17,7 +17,7 @@
             </select>
           </div>
         {{else}}
-          {{actor.name}}
+          {{actor.name}} <sup>{{system.heroType}} </sup>
         {{/if}}
       </h1>
 
@@ -111,7 +111,7 @@
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
       {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
-      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+      {{editor enrichedBiography target="system.biography" engine="tinymce" button=true editable=editable}}
     </div>
 
     {{!-- Owned Items Tab --}}

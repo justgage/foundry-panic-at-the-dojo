@@ -1,24 +1,25 @@
 Archie?
 
 {{#each archetypes as |archetype|}}
-    {{json archetype}}
     <div class="archetype-header">
-        <h4>{{this.name}}</h4>
-
         {{#each system.abilities as |ability index|}}
-            <div class='ability'>
-                {{#if @root.editable}}
-                    (link to change archetype here)
-                {{else}}
-                    {{#if ability.title}}
-                        <div>{{ability.title}}</div>
+            {{#if (eq ability.heroType @root.system.heroType)}}
+                <div class='ability'>
+                    {{#if @root.editable}}
+                        (link to change archetype here)
                     {{else}}
-                        <div>{{ability.heroType}} {{archetype.name}}</div>
-                    {{/if}}
+                        {{#if ability.title}}
+                            <div>{{ability.title}}</div>
+                        {{else}}
+                            <div>{{ability.heroType}} {{archetype.name}}</div>
+                        {{/if}}
 
-                    <div>{{{ability.description}}}</div>
-                {{/if}}
-            </div>
+                        <div>{{{ability.description}}}</div>
+                    {{/if}}
+                </div>
+            {{else}}
+                {{json ability.heroType}} != {{log @root}}
+            {{/if}}
         {{/each}}
     </div>
 {{/each}}

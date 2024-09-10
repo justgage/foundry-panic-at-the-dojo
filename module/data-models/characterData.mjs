@@ -3,6 +3,8 @@ const { SchemaField, NumberField, StringField, ArrayField, BooleanField } = foun
 export class CharacterData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
+      heroType: new StringField({ default: "Focused" }),
+
       attributes: new SchemaField({
         level: new NumberField({
           required: true,
@@ -69,8 +71,6 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
           min: 0,
           initial: 10,
         }),
-
-        heroType: new StringField({ default: "Focused" }),
       }),
     };
   }

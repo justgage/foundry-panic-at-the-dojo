@@ -56,9 +56,9 @@
                         <div class="archetype-editor-box">
                             {{editor ability.description
                                 target=(concat 'system.abilities.' index '.description')
-                            engine='prosemirror'
-                            button=true
-                            editable=@root.editable}}
+                                engine="tinymce"
+                                button=true
+                                editable=@root.editable}}
                         </div>
                     {{else}}
                         <p>{{this}}</p>
