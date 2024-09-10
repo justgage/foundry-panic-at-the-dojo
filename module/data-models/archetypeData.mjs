@@ -26,26 +26,4 @@ export class ArchetypeData extends foundry.abstract.TypeDataModel {
       }),
     };
   }
-
-  //   static migrateData(source) {
-  //     Object.keys(source.tokens).forEach((key) => {
-  //       if (!Number.isInteger(source.tokens[key])) {
-  //         source.tokens[key] = 0;
-  //       }
-  //     });
-
-  //     if (!Number.isInteger(source.attributes.level)) {
-  //       source.attributes.level = 1;
-  //     }
-
-  //     return super.migrateData(source);
-  //   }
-
-  //   get isMaxHealth() {
-  //     return this.health.value >= this.health.max;
-  //   }
-
-  //   get isDead() {
-  //     return this.health.value <= 0;
-  //   }
 }

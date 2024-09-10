@@ -54,8 +54,8 @@
                             placeholder="Ability description {{index}}" /> --}}
 
                         <div class="archetype-editor-box">
-                            {{editor action.description
-                                target=(concat 'system.abilities.{{index}}.' @index '.description')
+                            {{editor ability.description
+                                target=(concat 'system.abilities.' index '.description')
                             engine='prosemirror'
                             button=true
                             editable=@root.editable}}
