@@ -11,6 +11,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { PANIC } from "./helpers/config.mjs";
 import { RegisterHandlebarHelpers } from "./RegisterHandlebarHelpers.mjs";
 import { CharacterData } from "./data-models/characterData.mjs";
+import { ArchetypeData } from "./data-models/archetypeData.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -45,6 +46,10 @@ Hooks.once("init", function () {
     // The keys are the types defined in our template.json
     character: CharacterData,
     npc: CharacterData,
+  });
+
+  Object.assign(CONFIG.Item.dataModels, {
+    archetype: ArchetypeData,
   });
 
   CONFIG.Actor.trackableAttributes = {

@@ -43,11 +43,35 @@
     }
   },
   "Item": {
-    "types": ["form", "style", "item", "feature"],
+    "types": ["form", "style", "item", "feature", "archetype"],
     "templates": {
       "base": {
         "description": ""
       }
+    },
+
+    "archetype": {
+      "templates": ["base"],
+      "name": "Angel",
+      "complexity": 0,
+      "abilities": [
+        {
+          "title": "Focused ...",
+          "description": "Focused description",
+          "heroType": "Focused"
+        },
+        {
+          "title": "Fused ...",
+          "description": "Fused ...",
+          "heroType": "Fused"
+        },
+        {
+          "title": "Frantic ...",
+          "description": "Frantic ...",
+          "heroType": "Frantic"
+        }
+      ],
+      "archetypeSlug": "angel"
     },
 
     "form": {

@@ -1,0 +1,54 @@
+<form class='sheet archetype-sheet' autocomplete='off'>
+    <header class='sheet-header archetype-header'>
+        <div class='header-fields archetype-name'>
+            <h1 class='archetype-name'>
+                {{#if editable}}
+                    <input name='name' type='text' value='{{system.name}}' placeholder='Name' />
+                    <span>Archetype</span>
+                {{else}}
+                    {{system.name}} Archetype
+                {{/if}}
+            </h1>
+        </div>
+
+        <div class="">
+            {{#if editable}}
+                <label>Complexity:</label>
+                <input style="width: 5em" type="number" name="system.complexity" value="{{system.complexity}}"
+                    min="0" />
+            {{else}}
+                Complexity: {{system.complexity}}
+            {{/if}}
+        </div>
+        <button type="button" class="edit-toggle"
+            style="position: absolute; top: 0rem; right: 0;">{{#if editable}}View{{else}}Edit{{/if}}</button>
+    </header>
+
+    <section class='sheet-body'>
+        <div class='archetype-abilities'>
+            <h2>Abilities</h2>
+            {{#each system.abilities as |ability index|}}
+                <div class='ability'>
+                    {{#if ../editable}}
+                        <input type="text" name="system.abilities.{{index}}" value="{{this}}"
+                            placeholder="Ability {{index}}" />
+                    {{else}}
+                        <p>{{this}}</p>
+                    {{/if}}
+                </div>
+            {{/each}}
+            {{#if editable}}
+                <button type="button" class="add-ability">Add Ability</button>
+            {{/if}}
+        </div>
+
+        <div class='archetype-slug'>
+            <label>Archetype Slug:</label>
+            {{#if editable}}
+                <input type="text" name="system.archetypeSlug" value="{{system.archetypeSlug}}" />
+            {{else}}
+                {{system.archetypeSlug}}
+            {{/if}}
+        </div>
+    </section>
+</form>
