@@ -15,5 +15,8 @@
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
     "sass": "^1.53.0"
+  },
+  "dependencies": {
+    "prettier": "^3.3.3"
   }
 }
