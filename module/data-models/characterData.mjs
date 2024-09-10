@@ -69,6 +69,8 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
           min: 0,
           initial: 10,
         }),
+
+        heroType: new StringField({ default: "Focused" }),
       }),
     };
   }

@@ -734,5 +734,8 @@
   background-color: #ff8800;
   box-shadow: orange 0 0 2px 3px;
 }
+.panic-system .archetype-header {
+  background: rgb(255, 225, 255);
+}
 
 /*# sourceMappingURL=panic-system.css.map */

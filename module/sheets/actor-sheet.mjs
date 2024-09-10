@@ -117,6 +117,10 @@ export class PanicActorSheet extends ActorSheet {
     console.log("_prepareItems", context);
     // Initialize containers.
 
+    const archetypes = context.items.filter((i) => i.type == "archetype");
+
+    context.archetypes = archetypes;
+
     // forms + styles
     const { stances, forms, styles } = this.makeStances(context.items);
 

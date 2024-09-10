@@ -8,7 +8,14 @@
 
       <h1 class="charname">
         {{#if editable}}
-          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+          <div class="grid grid-3col">
+            <input class="grid-span-2" name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+            <select class="grid-span-1" name="system.heroType">
+              <option value="Focused" {{#if (eq system.heroType "Focused" )}}selected{{/if}}>Focused </option>
+              <option value="Fused" {{#if (eq system.heroType "Fused" )}}selected{{/if}}>Fused</option>
+              <option value="Frantic" {{#if (eq system.heroType "Frantic" )}}selected{{/if}}>Frantic </option>
+            </select>
+          </div>
         {{else}}
           {{actor.name}}
         {{/if}}
@@ -92,6 +99,8 @@
       <section class="">
         {{!-- For the main stances list, span the right two columns --}}
         <section class="main">
+          {{> "systems/panic-system/templates/actor/parts/archetype.hbs"}}
+
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
           {{> "systems/panic-system/templates/actor/parts/actor-stances.hbs"}}
         </section>

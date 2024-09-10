@@ -13,5 +13,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/panic-system/templates/item/parts/item-effects.hbs",
     "systems/panic-system/templates/item/parts/action.hbs",
     "systems/panic-system/templates/actor/parts/actor-stances.hbs",
+    "systems/panic-system/templates/actor/parts/archetype.hbs",
   ]);
 };
