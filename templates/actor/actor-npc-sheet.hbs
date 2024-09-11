@@ -4,56 +4,109 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
-      <div class="resources grid grid-3col">
+      <button type="button" class="edit-toggle">{{#if editable}}View{{else}}Edit{{/if}}</button>
 
-        {{!-- "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. --}}
-        <div class="resource flex-group-center">
-          <label for="system.health.value" class="resource-label">Health</label>
+      <h1 class="charname">
+        {{#if editable}}
+          <div class="grid grid-3col">
+            <input class="grid-span-2" name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+            <select class="grid-span-1" name="system.heroType">
+              <option value="Focused" {{#if (eq system.heroType "Focused" )}}selected{{/if}}>Focused </option>
+              <option value="Fused" {{#if (eq system.heroType "Fused" )}}selected{{/if}}>Fused</option>
+              <option value="Frantic" {{#if (eq system.heroType "Frantic" )}}selected{{/if}}>Frantic </option>
+            </select>
+          </div>
+        {{else}}
+          NPC: {{actor.name}} <sup>{{system.heroType}} </sup>
+        {{/if}}
+      </h1>
+
+
+      <div class="resources">
+
+        {{!-- <div class="resource flex-group-center">
+          <label for="system.attributes.level.value" class="resource-label">Level</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number" />
-            <span> / </span>
-            <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number" />
+            <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}"
+              data-dtype="Number" />
           </div>
         </div>
+      </div> --}}
+        <div class="tokens flexrow">
 
-        <div class="resource flex-group-center">
-          <label for="system.power.value" class="resource-label">Power</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.power.value" value="{{system.power.value}}" data-dtype="Number" />
-            <span> / </span>
-            <input type="text" name="system.power.max" value="{{system.power.max}}" data-dtype="Number" />
+          {{!-- HP --}}
+          <div class="token resource flex-group-center">
+            <label for="system.health.value" class="resource-label">HP</label>
+            <div class="resource-content token flexcol flex-center flex-between">
+              <input class="hp-current" type="text" name="system.health.value" value="{{system.health.value}}"
+                data-dtype="Number" />
+              <input class="hp-max" type="text" name="system.health.max" value="{{system.health.max}}"
+                data-dtype="Number" />
+            </div>
           </div>
-        </div>
 
-        <div class="resource flex-group-center">
-          <label for="system.cr" class="resource-label">CR / XP</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.cr" value="{{system.cr}}" data-dtype="Number" />
-            <span> / </span>
-            <input type="text" disabled="true" name="system.xp" value="{{system.xp}}" data-dtype="Number" />
-          </div>
-        </div>
+          {{#each system.tokens as |ability key|}}
+            {{!-- TOKENS! --}}
+            <div class="token token-{{key}}">
+              <label for="system.tokens.{{key}}" class="resource-label" data-roll="d20+@tokens.{{key}}.mod"
+                data-label="{{localize (lookup @root.config.tokens key)}}">{{localize (lookup @root.config.tokens key)}}</label>
+              <div class="flex">
+                <button class="removeToken flex-shrink w-14 sm-button" data-token-type="{{key}}">-</button>
+                <input class="tokenInput token-{{key}}" type="text" name="system.tokens.{{key}}" value="{{ability}}"
+                  data-dtype="Number" />
+                <button class="addToken flex-shrink w-14 sm-button" data-token-type="{{key}}">+</button>
+                {{!-- <span class="ability-mod rollable" data-roll="d20+@tokens.{{key}}.mod" data-label="{{localize (lookup @root.config.tokens key)}}">{{numberFormat ability.mod decimals=0 sign=true}}</span> --}}
+              </div>
+            </div>
+          {{/each}}
 
+        </div>
       </div>
-    </div>
+      {{!-- Display action dice character currently has selected --}}
+      <div class="action-dice-tray">
+        {{#if (nonEmpty system.currentStance.rolledDice)}}
+          Action Dice:
+          {{#each system.currentStance.rolledDice as |dice index|}}
+            <button class="dice" {{setDisabled dice.used }}>
+              {{#if (not dice.used)}}
+                <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
+                  {{setCheckedStr index ../system.currentStance.selectedDice}} value="{{index}}" />
+              {{/if}}
+              <label for="action-dice-{{index}}" class="font-xx-large">{{dice.result}}_ON_D{{dice.face}}</label>
+            </button>
+          {{/each}}
+        {{else}}
+          Please select a stance by rolling the dice
+        {{/if}}
+      </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="stances">Stances</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="items">Items</a>
+    {{!-- <a class="item" data-tab="spells">Spells</a> --}}
     <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+
+    {{!-- Owned stances Tab --}}
+    <div class="tab stances" data-group="primary" data-tab="stances">
+      <section class="">
+        {{!-- For the main stances list, span the right two columns --}}
+        <section class="main">
+          {{> "systems/panic-system/templates/actor/parts/archetype.hbs"}}
+
+          {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
+          {{> "systems/panic-system/templates/actor/parts/actor-stances.hbs"}}
+        </section>
+
+      </section>
+    </div>
 
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
@@ -65,6 +118,11 @@
     <div class="tab items" data-group="primary" data-tab="items">
       {{> "systems/panic-system/templates/actor/parts/actor-items.hbs"}}
     </div>
+
+    {{!-- Owned Spells Tab --}}
+    {{!-- <div class="tab spells" data-group="primary" data-tab="spells">
+      {{> "systems/panic-system/templates/actor/parts/actor-spells.hbs"}}
+    </div> --}}
 
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">

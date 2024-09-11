@@ -62,24 +62,24 @@
 
         </div>
       </div>
-      {{!-- Display action dice character currently has selected --}}
-      <div class="action-dice-tray">
-        {{#if (nonEmpty system.currentStance.rolledDice)}}
-          Action Dice:
-          {{#each system.currentStance.rolledDice as |dice index|}}
-            <button class="dice" {{setDisabled dice.used }}>
-              {{#if (not dice.used)}}
-                <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}"
-                  {{setCheckedStr index ../system.currentStance.selectedDice}} value="{{index}}" />
-              {{/if}}
-              <label for="action-dice-{{index}}" class="font-xx-large">{{dice.result}}_ON_D{{dice.face}}</label>
-            </button>
-          {{/each}}
-        {{else}}
-          Please select a stance by rolling the dice
-        {{/if}}
-      </div>
   </header>
+  {{!-- Display action dice character currently has selected --}}
+  <div class="action-dice-tray">
+    {{#if (nonEmpty system.currentStance.rolledDice)}}
+      Action Dice:
+      {{#each system.currentStance.rolledDice as |dice index|}}
+        <button class="dice" {{setDisabled dice.used }}>
+          {{#if (not dice.used)}}
+            <input type="radio" class="select-action-dice" name="action-dice" id="action-dice-{{index}}" {{setCheckedStr
+              index ../system.currentStance.selectedDice}} value="{{index}}" />
+          {{/if}}
+          <label for="action-dice-{{index}}" class="font-xx-large">{{dice.result}}_ON_D{{dice.face}}</label>
+        </button>
+      {{/each}}
+    {{else}}
+      Please select a stance by rolling the dice
+    {{/if}}
+  </div>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">

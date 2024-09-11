@@ -24,3 +24,28 @@
   @import "components/effects";
   @import "components/character-sheet";
 }
+
+div.window-app.panic-system.sheet {
+  background: url(../assets/bamboopaperwashed.jpg) 0% 0% / cover;
+  & .window-content {
+    background-image: none;
+  }
+  & .window-header {
+    color: rgb(58, 58, 58);
+    background: transparent;
+    border-bottom: 2px solid transparent;
+
+    transition: background-color 200ms ease-in-out;
+
+    &:hover {
+      background-color: #00000041;
+    }
+
+    & .header-button {
+      border-radius: 3px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      line-height: 26px;
+    }
+  }
+}

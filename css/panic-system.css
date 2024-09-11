@@ -751,4 +751,26 @@
   padding: 0.2em;
 }
 
+div.window-app.panic-system.sheet {
+  background: url(../assets/bamboopaperwashed.jpg) 0% 0%/cover;
+}
+div.window-app.panic-system.sheet .window-content {
+  background-image: none;
+}
+div.window-app.panic-system.sheet .window-header {
+  color: rgb(58, 58, 58);
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: background-color 200ms ease-in-out;
+}
+div.window-app.panic-system.sheet .window-header:hover {
+  background-color: rgba(0, 0, 0, 0.2549019608);
+}
+div.window-app.panic-system.sheet .window-header .header-button {
+  border-radius: 3px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  line-height: 26px;
+}
+
 /*# sourceMappingURL=panic-system.css.map */

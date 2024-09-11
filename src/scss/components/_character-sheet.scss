@@ -236,15 +236,16 @@ a.stance-tab {
 }
 
 .archetype-header {
+  background: rgb(255, 146, 255);
+  background: linear-gradient(300deg, rgba(199, 180, 255, 1) 0%, rgba(255, 146, 255, 1) 100%);
+  margin-bottom: 1rem;
+
   & h3 {
     background-color: #724073;
     border-bottom-right-radius: 20px;
     color: white;
     padding: 0.2em;
   }
-  background: rgb(255, 146, 255);
-  background: linear-gradient(300deg, rgba(199, 180, 255, 1) 0%, rgba(255, 146, 255, 1) 100%);
-  margin-bottom: 1rem;
 
   & .ability-description {
     font-family: Helvetica, Arial, sans-serif;

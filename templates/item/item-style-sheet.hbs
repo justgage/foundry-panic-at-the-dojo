@@ -40,7 +40,7 @@
       <div class="">
 
         <div class="style-enriched-description">
-          {{editor enrichedDescription target='system.description' engine='prosemirror' button=true editable=editable}}
+          {{editor enrichedDescription target='system.description' engine='prosemirror' button=false editable=editable}}
         </div>
 
 
@@ -68,7 +68,7 @@
                     {{editor action.editor
                             target=(concat 'system.uniqueActions.' @index '.description')
                             engine='prosemirror'
-                            button=true
+                            button=false
                             editable=../editable}}
                   </div>
                 </div>
