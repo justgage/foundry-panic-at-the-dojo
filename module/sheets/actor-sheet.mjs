@@ -159,7 +159,7 @@ export class PanicActorSheet extends ActorSheet {
         ...this.ensureArray(form?.system?.uniqueActions),
       ];
 
-      const name = `${style.name} ${form.name}`;
+      const name = `${style?.name} ${form?.name}`;
 
       stances.push({ name, form, style, actions });
     }
