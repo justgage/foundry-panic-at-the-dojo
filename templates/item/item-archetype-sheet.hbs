@@ -3,10 +3,10 @@
         <div class='header-fields archetype-name'>
             <h1 class='archetype-name'>
                 {{#if editable}}
-                    <input name='system.name' type='text' value='{{system.name}}' placeholder='Name' />
+                    <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
                     <span>Archetype</span>
                 {{else}}
-                    {{system.name}} Archetype
+                    {{item.name}} Archetype
                 {{/if}}
             </h1>
             <div class='archetype-slug'>

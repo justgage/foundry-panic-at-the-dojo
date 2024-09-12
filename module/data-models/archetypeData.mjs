@@ -19,24 +19,24 @@ export class ArchetypeData extends foundry.abstract.TypeDataModel {
           heroType: new StringField(),
         }),
         {
-          initial: () => {
-           return  {
-              "title": "Focused ...",
-              "description": "Focused description",
-              "heroType": "Focused"
+          initial: () => [
+            {
+              title: "",
+              description: "",
+              heroType: "Focused",
             },
             {
-              "title": "Fused ...",
-              "description": "Fused ...",
-              "heroType": "Fused"
+              title: "",
+              description: "",
+              heroType: "Fused",
             },
             {
-              "title": "Frantic ...",
-              "description": "Frantic ...",
-              "heroType": "Frantic"
-            }
-          }
-        }
+              title: "",
+              description: "",
+              heroType: "Frantic",
+            },
+          ],
+        },
       ),
 
       archetypeSlug: new StringField({
@@ -46,25 +46,25 @@ export class ArchetypeData extends foundry.abstract.TypeDataModel {
   }
 
   static migrateData(source) {
-if (!source.abilities || source.abilities.length == 0) {
-  source.abilities = [
-    {
-      "title": "Focused ...",
-      "description": "Focused description",
-      "heroType": "Focused"
-    },
-    {
-      "title": "Fused ...",
-      "description": "Fused ...",
-      "heroType": "Fused"
-    },
-    {
-      "title": "Frantic ...",
-      "description": "Frantic ...",
-      "heroType": "Frantic"
+    if (!source.abilities || source.abilities.length == 0) {
+      source.abilities = [
+        {
+          title: "Focused ...",
+          description: "Focused description",
+          heroType: "Focused",
+        },
+        {
+          title: "Fused ...",
+          description: "Fused ...",
+          heroType: "Fused",
+        },
+        {
+          title: "Frantic ...",
+          description: "Frantic ...",
+          heroType: "Frantic",
+        },
+      ];
     }
-  ]
-}
 
     return super.migrateData(source);
   }
