@@ -43,7 +43,7 @@
     }
   },
   "Item": {
-    "types": ["form", "style", "item", "feature", "archetype"],
+    "types": ["form", "style", "item", "archetype"],
     "templates": {
       "base": {
         "description": ""
@@ -52,7 +52,7 @@
 
     "archetype": {
       "templates": ["base"],
-      "name": "Angel",
+      "name": "",
       "complexity": 0,
       "abilities": [
         {
@@ -99,9 +99,6 @@
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
-    },
-    "feature": {
-      "templates": ["base"]
     }
   }
 }

@@ -18,12 +18,54 @@ export class ArchetypeData extends foundry.abstract.TypeDataModel {
           description: new StringField(),
           heroType: new StringField(),
         }),
+        {
+          initial: () => {
+           return  {
+              "title": "Focused ...",
+              "description": "Focused description",
+              "heroType": "Focused"
+            },
+            {
+              "title": "Fused ...",
+              "description": "Fused ...",
+              "heroType": "Fused"
+            },
+            {
+              "title": "Frantic ...",
+              "description": "Frantic ...",
+              "heroType": "Frantic"
+            }
+          }
+        }
       ),
 
       archetypeSlug: new StringField({
         required: true,
-        initial: "unique_name_for_styles",
       }),
     };
+  }
+
+  static migrateData(source) {
+if (!source.abilities || source.abilities.length == 0) {
+  source.abilities = [
+    {
+      "title": "Focused ...",
+      "description": "Focused description",
+      "heroType": "Focused"
+    },
+    {
+      "title": "Fused ...",
+      "description": "Fused ...",
+      "heroType": "Fused"
+    },
+    {
+      "title": "Frantic ...",
+      "description": "Frantic ...",
+      "heroType": "Frantic"
+    }
+  ]
+}
+
+    return super.migrateData(source);
   }
 }

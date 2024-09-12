@@ -1,5 +1,5 @@
 # CHANGELOG
 
-## 1.2.0
+## 0.0.1
 
-- Add support for Foundry v10
+- Initial version, mostly just the basic character sheet working, with basic version of stances, forms, and archetypes

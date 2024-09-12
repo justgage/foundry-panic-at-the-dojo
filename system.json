@@ -1,11 +1,11 @@
 {
   "id": "panic-system",
-  "title": "Panic At The Dojo",
+  "title": "Panic At The Dojo (Unofficial)",
   "description": "The Unofficial Panic At The Dojo system for FoundryVTT!",
   "authors": [
     {
       "name": "Gage Peterson",
-      "discord": "justgage2"
+      "discord": "just.gage"
     }
   ],
   "url": "https://github.com/justgage/foundry-panic-at-the-dojo",
