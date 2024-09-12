@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 @font-face {
   font-family: "Dicier";
   src: url("../fonts/Dicier-Round-Heavy.woff2") format("truetype");
@@ -263,8 +262,15 @@
 }
 
 /* Styles limited to panic-system sheets */
-.panic-system {
+.font-brush {
   font-family: "Caveat Brush", sans-serif;
+}
+
+.panic-system {
+  font-family: "Reddit Sans Condensed", sans-serif;
+}
+.panic-system h1, .panic-system h2, .panic-system h2, .panic-system h3, .panic-system h4, .panic-system h5 {
+  font-weight: 600;
 }
 .panic-system .item-form {
   font-family: "Caveat Brush", sans-serif;
@@ -541,6 +547,7 @@
   background-origin: border-box;
 }
 .panic-system .token {
+  font-family: "Caveat Brush", sans-serif;
   --tokenInputColor: #72e900;
   position: relative;
   text-align: center;

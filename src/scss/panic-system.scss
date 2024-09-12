@@ -1,7 +1,7 @@
 // Add custom fonts by visiting and search https://fonts.google.com
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Permanent+Marker&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
 
 // Import utilities.
 @import "utils/typography";
@@ -16,8 +16,16 @@
 
 @import "chat";
 /* Styles limited to panic-system sheets */
-.panic-system {
+
+.font-brush {
   font-family: "Caveat Brush", sans-serif;
+}
+
+.panic-system {
+  font-family: "Reddit Sans Condensed", sans-serif;
+  & h1, & h2, & h2, & h3, & h4, & h5 {
+    font-weight: 600;
+  }
   @import "components/forms";
   @import "components/resource";
   @import "components/items";
