@@ -12,6 +12,7 @@ import { PANIC } from "./helpers/config.mjs";
 import { RegisterHandlebarHelpers } from "./RegisterHandlebarHelpers.mjs";
 import { CharacterData } from "./data-models/characterData.mjs";
 import { ArchetypeData } from "./data-models/archetypeData.mjs";
+import { createCompendiums } from "./import-script.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -92,6 +93,8 @@ RegisterHandlebarHelpers();
 
 Hooks.once("ready", function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+  createCompendiums();
+
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
