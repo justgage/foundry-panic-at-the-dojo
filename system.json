@@ -34,7 +34,33 @@
       "path": "lang/en.json"
     }
   ],
-  "packs": [],
+  "packs": [
+
+    {
+      "name": "panic-archetypes-and-styles",
+      "label": "Panic - Archetypes & Styles",
+      "path": "packs/panic-archetypes-and-styles",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "panic-system",
+      "flags": {}
+    },
+    {
+      "name": "panic-forms",
+      "label": "Panic - Forms",
+      "path": "packs/panic-forms",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "panic-system",
+      "flags": {}
+    }
+  ],
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/justgage/foundry-panic-at-the-dojo/main/system.json",

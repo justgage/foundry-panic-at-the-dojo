@@ -4,12 +4,28 @@ import { archetypes, forms, styles } from "./text-content.mjs";
 // Full script to transform and create Foundry items and place them in folders
 
 export async function createCompendiums() {
-  const archetypeCompendiumName = "panic-dojo-archetypes";
-  const formCompendiumName = "panic-dojo-forms";
+  const archetypeCompendiumName = "Panic - Archetypes & Styles";
+  const formCompendiumName = "Panic - Forms";
 
   // Step 1: Create or find the compendiums for archetypes and forms
   let archetypePack = game.packs.find((p) => p.metadata.label === archetypeCompendiumName);
   let formPack = game.packs.find((p) => p.metadata.label === formCompendiumName);
+
+  if (archetypePack && formPack) {
+    console.log("Panic compendiums already exist, not re-creating them!");
+    return;
+  }
+
+  // Useful when you're developing them, but not normally
+  // if (archetypePack) {
+  //   ui.notifications.info(`${archetypeCompendiumName} exists, recreating it`);
+  //   await archetypePack.deleteCompendium();
+  // }
+
+  // if (formPack) {
+  //   ui.notifications.info(`${formCompendiumName} exists, recreating it`);
+  //   await formPack.deleteCompendium();
+  // }
 
   if (!archetypePack) {
     archetypePack = await CompendiumCollection.createCompendium({
@@ -33,25 +49,25 @@ export async function createCompendiums() {
 
   for (const archetype of archetypes) {
     // Create folder for each archetype
-    const archetypeFolder = new Folder({ name: archetype.name, type: "Item" });
-    await archetypePack.importFolder(archetypeFolder);
+    await archetypePack.importFolder(new Folder({ name: archetype.name, type: "Item" }));
+    const archetypeFolder = archetypePack.tree.children
+      .map((f) => f.folder)
+      .find((f) => f.name == archetype.name);
+
+    const styleName = `Styles for ${archetype.name}`;
 
     // Create Styles subfolder for each archetype
-    const stylesSubfolder = new Folder({
-      name: "Styles",
-      type: "Item",
-      folder: archetypeFolder._id,
-      depth: 2
-    });
+    await archetypePack.importFolder(new Folder({ name: styleName, type: "Item" }));
 
-    await archetypePack.importFolder(stylesSubfolder);
+    const stylesSubfolder = archetypePack.tree.children
+      .map((f) => f.folder)
+      .find((f) => f.name == styleName);
+
+    stylesSubfolder.update({ folder: archetypeFolder._id });
 
     archetypeFolders[archetype.name] = archetypeFolder._id;
     archetypeStyleSubfolders[archetype.name] = stylesSubfolder._id;
   }
-
-  // Step 3: Create Foundry items based on the transformed data
-  const foundryItems = [];
 
   function mapActions(actions) {
     return actions.map((action) => {
@@ -114,7 +130,7 @@ export async function createCompendiums() {
         parentArchetypeName: style.parentArchetypeName,
         range: `${style.minRange}-${style.maxRange}`,
         uniqueActions: mapActions(style.actions),
-        abilityDescription: style.ability.description,
+        description: style.ability.description,
       },
       folder: archetypeStyleSubfolders[style.parentArchetypeName],
     };
@@ -134,26 +150,36 @@ export async function createCompendiums() {
     };
   }
 
+  // process:
+  // 1. create compendium, store reference
+  // 2. import a folder, store a reference
+  // 3. import a document, then add to that folder using .update()
+  // 4. repeat for each archetype
+
   // Step 4: Push transformed items into the respective compendiums
   for (const archetype of archetypes) {
     const archetypeItem = createArchetypeItem(archetype);
+    const folderId = archetype.folder;
     const item = await Item.create(archetypeItem, { pack: archetypePack._id });
-    await archetypePack.importDocument(item);
+    const newItem = await archetypePack.importDocument(item);
+    newItem.update({ folder: folderId });
   }
 
   for (const style of styles) {
     const styleItem = createStyleItem(style);
-    const item = await Item.create(styleItem, {temporary: true });
-    await archetypePack.importDocument(item);
+    const folderId = styleItem.folder;
+    const item = await Item.create(styleItem, { temporary: true });
+    const newStyle = await archetypePack.importDocument(item);
+    newStyle.update({ folder: folderId });
   }
 
   for (const form of forms) {
     const formItem = createFormItem(form);
-    const item = await Item.create(formItem, {temporary: true });
+    const item = await Item.create(formItem, { temporary: true });
     await formPack.importDocument(item);
   }
 
   ui.notifications.info(
-    `${archetypes.length + styles.length + forms.length} items successfully imported into the compendiums!`,
+    `PANIC at the Dojo: Successfully imported ${archetypes.length + styles.length + forms.length} items into the compendiums! Please check those out for styles/forms`,
   );
 }
