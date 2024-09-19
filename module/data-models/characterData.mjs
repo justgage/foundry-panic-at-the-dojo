@@ -76,11 +76,31 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
   }
 
   static migrateData(source) {
+    if (typeof source.tokens != "object") {
+      console.warn(source.tokens, "is invalid!")
+      source.tokens = {
+        speed: { value: 0 },
+        iron: { value: 0 },
+        power: { value: 0 },
+        weakness: { value: 0 },
+        burning: { value: 0 },
+      };
+    }
     Object.keys(source.tokens).forEach((key) => {
       if (!Number.isInteger(source.tokens[key])) {
         source.tokens[key] = 0;
       }
     });
+
+    if (!source.attributes) {
+      console.warn(source.attributes, "is invalid!")
+
+      source.attributes = {
+        level: {
+          value: 1,
+        },
+      };
+    }
 
     if (!Number.isInteger(source?.attributes?.level)) {
       source.attributes.level = 1;

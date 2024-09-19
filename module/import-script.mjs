@@ -203,6 +203,8 @@ export async function createCompendiums() {
   }
 
   ui.notifications.info(
-    `PANIC at the Dojo: Successfully imported ${archetypes.length + styles.length + forms.length} items into the compendiums! Please check those out for styles/forms`,
+    `PANIC at the Dojo: Successfully imported ${
+      archetypes.length + styles.length + forms.length
+    } items into the compendiums! Please check those out for styles/forms`,
   );
 }

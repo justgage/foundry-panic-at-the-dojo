@@ -240,26 +240,40 @@ export class PanicActorSheet extends ActorSheet {
           index: index,
         },
       });
-
-      const diceToRoll = this.ensureArray(this.currentStance(index).form.system.actionDice).join(
-        " + ",
+      const dice = this.currentStance(index).form.system.actionDice.filter((d) =>
+        `${d}`.startsWith("d"),
       );
+      const constants = this.currentStance(index).form.system.actionDice.filter(
+        (d) => !`${d}`.startsWith("d"),
+      );
+      const diceToRoll = dice.join(" + ");
 
-      const roll = await new Roll(diceToRoll).roll({ async: true });
+      let rolledResults = [];
+      if (diceToRoll != "") {
+        const roll = await new Roll(diceToRoll).roll({ async: true });
 
-      // Check if Dice So Nice is active and trigger the animation
-      if (game.dice3d) {
-        await game.dice3d.showForRoll(roll, game.user, true);
+        // Check if Dice So Nice is active and trigger the animation
+        if (game.dice3d) {
+          await game.dice3d.showForRoll(roll, game.user, true);
+        }
+
+        // Save the rolled results to the Actor's data
+        rolledResults = roll.dice.map((d) => ({
+          face: d.faces,
+          result: d.results[0].result,
+          used: false,
+        }));
       }
 
-      // Save the rolled results to the Actor's data
-      const rolledResults = roll.dice.map((d) => ({
-        face: d.faces,
-        result: d.results[0].result,
+      const constantsToDice = constants.map((c) => ({
+        face: 20,
+        result: c,
         used: false,
       }));
 
-      this.actor.update({ "system.currentStance.rolledDice": rolledResults });
+      this.actor.update({
+        "system.currentStance.rolledDice": [...rolledResults, ...constantsToDice],
+      });
 
       const name = this.currentStance().name;
 

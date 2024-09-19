@@ -20,7 +20,7 @@
       "thumbnail": "systems/panic-system/assets/anvil-impact.png"
     }
   ],
-  "version": "0.0.5",
+  "version": "0.0.6",
   "compatibility": {
     "minimum": 11,
     "verified": "11.315"

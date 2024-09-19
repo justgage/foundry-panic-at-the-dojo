@@ -648,6 +648,9 @@
 .panic-system .stance .stance-abilities {
   padding: 0.5rem;
 }
+.panic-system .stance .stance-abilities > div {
+  padding-bottom: 0.5rem;
+}
 .panic-system .stance .stance-header {
   flex-grow: 1;
   background-color: rgb(205, 205, 205);

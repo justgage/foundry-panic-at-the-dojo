@@ -123,6 +123,9 @@
 
   & .stance-abilities {
     padding: 0.5rem;
+    & > div {
+      padding-bottom: 0.5rem;
+    }
   }
 
   & .stance-header {
