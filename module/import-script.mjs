@@ -82,13 +82,36 @@ export async function createCompendiums() {
             .map((token) => `${token.number} ${token.tokenType}`)
             .join(", ");
         }
+
+        if (level.otherCost) {
+          costString += level.otherCost.join(", ");
+        }
         return costString;
       });
 
       return {
         title: action.name,
         cost: costs.join(", "),
-        description: action.levels.map((level) => `<p>${level.description}</p>`).join(""),
+        description: action.levels
+          .map((level) => {
+            let costString = "";
+
+            if (level.diceCost) {
+              costString += level.diceCost.map((c) => `${c}+`).join(" or ");
+            }
+
+            if (level.tokenCost) {
+              costString += level.tokenCost
+                .map((token) => `${token.number} ${token.tokenType}`)
+                .join(", ");
+            }
+
+            if (level.otherCost) {
+              costString += level.otherCost.join("");
+            }
+            return `<p><strong>${costString}</strong> ${level.description}</p>`;
+          })
+          .join(""),
       };
     });
   }

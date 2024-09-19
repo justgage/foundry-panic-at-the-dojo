@@ -20,7 +20,7 @@
       "thumbnail": "systems/panic-system/assets/anvil-impact.png"
     }
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "compatibility": {
     "minimum": 11,
     "verified": "11.315"
@@ -34,33 +34,7 @@
       "path": "lang/en.json"
     }
   ],
-  "packs": [
-
-    {
-      "name": "panic-archetypes-and-styles",
-      "label": "Panic - Archetypes & Styles",
-      "path": "packs/panic-archetypes-and-styles",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "system": "panic-system",
-      "flags": {}
-    },
-    {
-      "name": "panic-forms",
-      "label": "Panic - Forms",
-      "path": "packs/panic-forms",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "system": "panic-system",
-      "flags": {}
-    }
-  ],
+  "packs": [],
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/justgage/foundry-panic-at-the-dojo/main/system.json",

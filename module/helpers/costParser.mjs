@@ -124,6 +124,12 @@ export function spendCost(actor, cost, dry_run = false) {
       success = false;
       // break;
     }
+  } else if (resource == "clone") {
+    // TODO: we aren't sure which token they want to spend!
+    success = true;
+  } else if (resource == "basic") {
+    // TODO: we aren't sure which token they want to spend!
+    success = true;
   } else if (Number.isInteger(actor.system.tokens[resource])) {
     // The "Bad" tokens will be added to you instead
     // of taken away.

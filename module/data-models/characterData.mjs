@@ -82,7 +82,7 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
       }
     });
 
-    if (!Number.isInteger(source.attributes.level)) {
+    if (!Number.isInteger(source?.attributes?.level)) {
       source.attributes.level = 1;
     }
 
