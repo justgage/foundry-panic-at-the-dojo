@@ -1,5 +1,12 @@
 # Panic At The Dojo System
 
+Put this in Foundry to install: 
+```
+https://raw.githubusercontent.com/justgage/foundry-panic-at-the-dojo/refs/heads/main/system.json
+```
+
+It's not currently on the store since it's pretty rough still.
+
 ![Foundry v11](https://img.shields.io/badge/foundry-v11-green)
 
 This is a custom System using Foundry VTT. This is very much an Alpha-level might eat your cat (I mean game, game) at any moment. I wouldn't rely on this module but I'm putting it up so others can at least TRY it.
