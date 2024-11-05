@@ -56,6 +56,7 @@ Hooks.once("init", function () {
   CONFIG.Actor.trackableAttributes = {
     character: {
       bar: ["health"],
+      value: ["health.value"]
     },
   };
 

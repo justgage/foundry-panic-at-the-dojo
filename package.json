@@ -6,8 +6,7 @@
     "build": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --no-source-map",
     "watch": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --source-map --watch",
     "format": "prettier --write './**/*.{mjs,ts,json,html,css}'",
-    "release": "mv releases .. && zip -r release.zip * && mv ../releases . && mv release.zip releases && mv releases/release.zip \"releases/v$(cat system.json| jq -r .version).zip\""
-  },
+    "release": "./release.sh"  },
   "browserslist": [
     "last 3 versions"
   ],
