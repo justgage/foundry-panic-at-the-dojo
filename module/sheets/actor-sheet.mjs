@@ -169,6 +169,36 @@ export class PanicActorSheet extends ActorSheet {
 
   /* -------------------------------------------- */
 
+  formatResourceSpend(resource, amount) {
+    switch (resource) {
+      case "free":
+        return `a free action`;
+
+      case "dice":
+        const actionDice = this.actor.system.currentStance.rolledDice;
+        let diceIndex = this.actor.system.currentStance.selectedDice;
+
+        if (diceIndex == -1) {
+          diceIndex = actionDice.findIndex((die) => !die.used && die.result >= amount);
+        }
+        const dice = actionDice[diceIndex];
+        if (dice) {
+          return `a <span class="dice"> ${dice.result}_ON_D${dice.face}</span> die`;
+        } else {
+          return `a +${amount} die`;
+        }
+
+      case "clone":
+        if (amount > 1) return `${amount} clones`;
+        else return `a ${amount} clone`;
+
+      default:
+        console.warn("this is a fallthrough", resource);
+        if (amount > 1) return `${amount} ${resource} tokens`;
+        else return `a ${amount} ${resource} token`;
+    }
+  }
+
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
@@ -210,8 +240,13 @@ export class PanicActorSheet extends ActorSheet {
         let chatContent = `
         <div class="panic-system">
         <div class="flex-row items-center">
-        <img class="profile-img" src="${this.actor.img}" data-edit="img" title="${this.actor.name}" height="40" width="40" />
-        <h3>${this.actor.name} spends: <b>${applicableCosts[0].amount} ${applicableCosts[0].resource}</b> to preform:</h3>
+        <img class="profile-img" src="${this.actor.img}" data-edit="img" title="${
+          this.actor.name
+        }" height="40" width="40" />
+        <h3>${this.actor.name} spends: <b>${this.formatResourceSpend(
+          applicableCosts[0].resource,
+          applicableCosts[0].amount,
+        )}</b> to perform:</h3>
         </div>
         <section>
         ${actionHtml}

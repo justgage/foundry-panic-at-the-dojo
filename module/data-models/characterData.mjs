@@ -77,7 +77,7 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
 
   static migrateData(source) {
     if (typeof source.tokens != "object") {
-      console.warn(source.tokens, "is invalid!")
+      console.warn(source.tokens, "is invalid!");
       source.tokens = {
         speed: { value: 0 },
         iron: { value: 0 },
@@ -93,7 +93,7 @@ export class CharacterData extends foundry.abstract.TypeDataModel {
     });
 
     if (!source.attributes) {
-      console.warn(source.attributes, "is invalid!")
+      console.warn(source.attributes, "is invalid!");
 
       source.attributes = {
         level: {

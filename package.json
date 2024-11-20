@@ -1,12 +1,13 @@
 {
   "name": "panic-system",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "description": "CSS compiler for the Panic system",
   "scripts": {
     "build": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --no-source-map",
     "watch": "sass src/scss/panic-system.scss css/panic-system.css --style=expanded --source-map --watch",
     "format": "prettier --write './**/*.{mjs,ts,json,html,css}'",
-    "release": "./release.sh"  },
+    "release": "./release.sh"
+  },
   "browserslist": [
     "last 3 versions"
   ],
