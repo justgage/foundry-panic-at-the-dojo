@@ -1,5 +1,6 @@
 import { canAfford, parseActionCost, spendCost } from "../helpers/costParser.mjs";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
+import { basicActions } from "../text-content.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -53,6 +54,10 @@ export class PanicActorSheet extends ActorSheet {
 
     // Add the editable state to the context
     context.editable = this.editable;
+
+    context.basicActions = { 
+      actions: basicActions
+    };
 
     // Prepare character data and items.
     if (actorData.type == "character") {
