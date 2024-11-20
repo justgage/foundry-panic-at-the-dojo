@@ -55,8 +55,8 @@ export class PanicActorSheet extends ActorSheet {
     // Add the editable state to the context
     context.editable = this.editable;
 
-    context.basicActions = { 
-      actions: basicActions
+    context.basicActions = {
+      actions: basicActions,
     };
 
     // Prepare character data and items.

@@ -2404,114 +2404,58 @@ export const reinforceAction = {
     },
   ],
 };
-export const basicActions = [
+
+// NOTE: converted with "mapActions" in import-script.mjs
+export let basicActions = [
   {
-    name: "Movement",
-    levels: [{ description: "You gain X Speed tokens.", otherCost: ["X"] }],
+    title: "Movement",
+    cost: "X",
+    description: "<p><strong>X</strong> You gain X Speed tokens.</p>",
   },
   {
-    name: "Damage",
-    levels: [
-      {
-        description: "Choose one enemy within your range. Deal 1 damage to them",
-        diceCost: [1],
-      },
-      {
-        description: "Deal 2 damage instead.",
-        diceCost: [3],
-      },
-      {
-        description: "Deal 3 damage instead, and push them 1 space away.",
-        diceCost: [5],
-      },
-      {
-        description: "Deal 4 damage instead, and push them 1 more space.",
-        diceCost: [7],
-      },
-      {
-        description: "Deal 5 damage instead, and push them 1 more space.",
-        diceCost: [9],
-      },
-    ],
+    title: "Damage",
+    cost: "1+, 3+, 5+, 7+, 9+",
+    description:
+      "<p><strong>1+</strong> Choose one enemy within your range. Deal 1 damage to them</p><p><strong>3+</strong> Deal 2 damage instead.</p><p><strong>5+</strong> Deal 3 damage instead, and push them 1 space away.</p><p><strong>7+</strong> Deal 4 damage instead, and push them 1 more space.</p><p><strong>9+</strong> Deal 5 damage instead, and push them 1 more space.</p>",
   },
   {
-    name: "Throw",
-    levels: [
-      {
-        description: "Choose an adjacent enemy or ally. Push them up to X spaces.",
-        otherCost: ["X"],
-      },
-    ],
+    title: "Throw",
+    cost: "X",
+    description:
+      "<p><strong>X</strong> Choose an adjacent enemy or ally. Push them up to X spaces.</p>",
   },
   {
-    name: "Grapple",
-    levels: [
-      {
-        description: "Choose an enemy or ally within range. Pull them up to X spaces.",
-        otherCost: ["X"],
-      },
-    ],
+    title: "Grapple",
+    cost: "X",
+    description:
+      "<p><strong>X</strong> Choose an enemy or ally within range. Pull them up to X spaces.</p>",
   },
   {
-    name: "Open The Path",
-    levels: [
-      {
-        description: "Choose an obstacle in range and destroy it.",
-        diceCost: [1],
-      },
-      {
-        description: "Also destroy every obstacle adjacent to it.",
-        diceCost: [4],
-      },
-      {
-        description: "Also destroy every obstacle adjacent to those obstacles.",
-        diceCost: [8],
-      },
-    ],
+    title: "Open The Path",
+    cost: "1+, 4+, 8+",
+    description:
+      "<p><strong>1+</strong> Choose an obstacle in range and destroy it.</p><p><strong>4+</strong> Also destroy every obstacle adjacent to it.</p><p><strong>8+</strong> Also destroy every obstacle adjacent to those obstacles.</p>",
   },
   {
-    name: "A Challenger Approaches",
-    levels: [
-      {
-        description: "Challenge an enemy within Range 1 - 4.",
-        diceCost: [1],
-      },
-    ],
+    title: "A Challenger Approaches",
+    cost: "1+",
+    description: "<p><strong>1+</strong> Challenge an enemy within Range 1 - 4.</p>",
   },
   {
-    name: "Put It Out!",
-    levels: [
-      {
-        description: "Remove one token from someone within range.",
-        diceCost: [2],
-      },
-      {
-        description: "Remove one more token from them.",
-        diceCost: [4],
-      },
-      {
-        description: "Remove one more token from them.",
-        diceCost: [7],
-      },
-    ],
+    title: "Put It Out!",
+    cost: "2+, 4+, 7+",
+    description:
+      "<p><strong>2+</strong> Remove one token from someone within range.</p><p><strong>4+</strong> Remove one more token from them.</p><p><strong>7+</strong> Remove one more token from them.</p>",
   },
   {
-    name: "Bring it On!",
-    levels: [
-      {
-        description: "Challenge any number of enemies you can see.",
-        diceCost: [4],
-      },
-    ],
+    title: "Bring it On!",
+    cost: "4+",
+    description: "<p><strong>4+</strong> Challenge any number of enemies you can see.</p>",
   },
   {
-    name: "Rescue",
-    levels: [
-      {
-        description:
-          "Chose an ally within range with zero HP, or an ally who is not in play. That ally heals. If that ally is not in play, they return to play in an empty space of their choice.",
-        diceCost: [5],
-      },
-    ],
+    title: "Rescue",
+    cost: "5+",
+    description:
+      "<p><strong>5+</strong> Chose an ally within range with zero HP, or an ally who is not in play. That ally heals. If that ally is not in play, they return to play in an empty space of their choice.</p>",
   },
 ];

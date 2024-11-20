@@ -59,6 +59,14 @@ function parseActionCost(costString) {
         continue;
       }
 
+      if (section.match(/X/i)) {
+        costs.push({
+          resource: "dice",
+          amount: "X",
+        });
+        continue;
+      }
+
       // Handle any other unexpected format
       console.warn(`Unrecognized cost format: "${section}"`);
     } catch (error) {
@@ -107,7 +115,7 @@ export function spendCost(actor, cost, dry_run = false) {
 
     const maybeDice = actionDice[diceIndex];
 
-    if (maybeDice && !maybeDice.used && maybeDice.result >= amount) {
+    if (maybeDice && !maybeDice.used && (maybeDice.result >= amount || c.amount == "X")) {
       const newRolledDice = foundry.utils
         .deepClone(actor.system.currentStance.rolledDice)
         .map((dice, index) => (index == diceIndex ? { ...dice, used: true } : dice));
